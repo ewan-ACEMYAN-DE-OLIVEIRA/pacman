@@ -1,2 +1,2 @@
 # pacman
-https://kculture.kgames.fr/?join=bhZo8lC7Q
+https://kculture.kgames.fr/lobby?roomId=IXdyuDe0D
