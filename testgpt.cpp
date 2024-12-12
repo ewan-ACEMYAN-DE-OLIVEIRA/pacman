@@ -12,6 +12,19 @@
 
 using namespace std;
 
+// Fonction pour lire une seule touche sans avoir besoin d'appuyer sur Entrée
+char getKey() {
+    struct termios oldt, newt;
+    char ch;
+    tcgetattr(STDIN_FILENO, &oldt); // Sauvegarde des paramètres de terminal
+    newt = oldt;
+    newt.c_lflag &= ~(ICANON | ECHO); // Désactive le mode canonique et l'écho
+    tcsetattr(STDIN_FILENO, TCSANOW, &newt); // Applique les nouveaux paramètres
+    ch = getchar(); // Récupère un caractère
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldt); // Restaure les paramètres de terminal
+    return ch; // Retourne le caractère
+}
+
 void clearScreen() {
     cout << "\033[H\033[2J";
 }
@@ -29,15 +42,91 @@ void couleur(const unsigned &coul) {
     cout << "\033[" << coul << "m";
 }
 
-typedef vector<char> CVLine;
-typedef vector<CVLine> CMatrix;
-typedef pair<unsigned, unsigned> CPosition;
+typedef vector<char> CVLine; // Ligne de la grille
+typedef vector<CVLine> CMatrix; // Grille
+typedef pair<unsigned, unsigned> CPosition; // Coordonnée dans la grille
 
 const char kTokenPlayer1 = 'X';
 const char kTokenPlayer2 = 'O';
 const char kEmpty = '+';
 const char kWall = '#';
 const char kBonus = '*';
+const char kBonusRed = 'R'; // Bonus de 2 tours
+const char kBonusGreen = 'G'; // Bonus de 3 tours
+const char kBonusMagenta = 'M'; // Bonus de 1 tour
+
+void showMatrix(const CMatrix &Mat) {
+    clearScreen();
+    for (size_t i = 0; i < Mat.size(); ++i) {
+        for (size_t j = 0; j < Mat[i].size(); ++j) {
+            if (Mat[i][j] == kTokenPlayer1) {
+                couleur(KRouge);
+                cout << kTokenPlayer1;
+                couleur(KReset);
+            } else if (Mat[i][j] == kTokenPlayer2) {
+                couleur(KBleu);
+                cout << kTokenPlayer2;
+                couleur(KReset);
+            } else if (Mat[i][j] == kWall) {
+                couleur(KJaune);
+                cout << kWall;
+                couleur(KReset);
+            } else if (Mat[i][j] == kBonusRed) {
+                couleur(KRouge);
+                cout << kBonusRed;
+                couleur(KReset);
+            } else if (Mat[i][j] == kBonusGreen) {
+                couleur(KVert);
+                cout << kBonusGreen;
+                couleur(KReset);
+            } else if (Mat[i][j] == kBonusMagenta) {
+                couleur(KMagenta);
+                cout << kBonusMagenta;
+                couleur(KReset);
+            } else {
+                cout << kEmpty;
+            }
+        }
+        cout << endl;
+    }
+}
+
+void initMat(CMatrix &Mat, unsigned nbLine, unsigned nbColumn, CPosition &posPlayer1, CPosition &posPlayer2, unsigned nbWalls, unsigned nbBonus) {
+    Mat.resize(nbLine, CVLine(nbColumn, kEmpty));
+    Mat[posPlayer1.first][posPlayer1.second] = kTokenPlayer1;
+    Mat[posPlayer2.first][posPlayer2.second] = kTokenPlayer2;
+
+    srand(time(0));
+
+    // Générer des murs
+    for (unsigned i = 0; i < nbWalls; ++i) {
+        unsigned x = rand() % nbLine;
+        unsigned y = rand() % nbColumn;
+        if (Mat[x][y] == kEmpty) {
+            Mat[x][y] = kWall;
+        } else {
+            --i; // Si la case est déjà occupée, refaire un essai
+        }
+    }
+
+    // Générer des bonus
+    for (unsigned i = 0; i < nbBonus; ++i) {
+        unsigned x = rand() % nbLine;
+        unsigned y = rand() % nbColumn;
+        if (Mat[x][y] == kEmpty) {
+            int bonusType = rand() % 3;
+            if (bonusType == 0) Mat[x][y] = kBonusMagenta;  // Bonus de 1 tour
+            else if (bonusType == 1) Mat[x][y] = kBonusRed; // Bonus de 2 tours
+            else Mat[x][y] = kBonusGreen; // Bonus de 3 tours
+        } else {
+            --i; // Si la case est déjà occupée, refaire un essai
+        }
+    }
+}
+
+bool isValidMove(const CMatrix &Mat, int x, int y) {
+    return x >= 0 && x < Mat.size() && y >= 0 && y < Mat[0].size() && Mat[x][y] != kWall;
+}
 
 struct Node {
     CPosition pos;
@@ -54,12 +143,11 @@ int heuristic(const CPosition &a, const CPosition &b) {
 
 vector<CPosition> getNeighbors(const CPosition &pos, const CMatrix &Mat) {
     vector<CPosition> neighbors;
-    // Ajout des directions pour les déplacements diagonaux
     vector<pair<int, int>> directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}, {-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
     for (const auto &dir : directions) {
         int nx = pos.first + dir.first;
         int ny = pos.second + dir.second;
-        if (nx >= 0 && nx < Mat.size() && ny >= 0 && ny < Mat[0].size() && Mat[nx][ny] != kWall) {
+        if (isValidMove(Mat, nx, ny)) {
             neighbors.emplace_back(nx, ny);
         }
     }
@@ -110,119 +198,65 @@ void moveAI(CMatrix &Mat, CPosition &posAI, const CPosition &posPlayer1) {
     }
 }
 
-void moveToken(CMatrix &Mat, char move, CPosition &pos) {
+void moveToken(CMatrix &Mat, char move, CPosition &pos, bool &extraTurns) {
     int x = pos.first;
     int y = pos.second;
 
-    Mat[x][y] = kEmpty;
+    Mat[x][y] = kEmpty; // Enlève l'ancien positionnement du joueur
 
     switch (tolower(move)) {
     case 'z': // Haut
-        if (x > 0 && Mat[x - 1][y] != kWall) --x;
+        if (isValidMove(Mat, x - 1, y)) --x;
+        else extraTurns = true; // Effet miroir sur le haut
         break;
     case 's': // Bas
-        if (x < Mat.size() - 1 && Mat[x + 1][y] != kWall) ++x;
+        if (isValidMove(Mat, x + 1, y)) ++x;
+        else extraTurns = true; // Effet miroir sur le bas
         break;
     case 'q': // Gauche
-        if (y > 0 && Mat[x][y - 1] != kWall) --y;
+        if (isValidMove(Mat, x, y - 1)) --y;
+        else extraTurns = true; // Effet miroir sur la gauche
         break;
     case 'd': // Droite
-        if (y < Mat[0].size() - 1 && Mat[x][y + 1] != kWall) ++y;
-        break;
-    case 'a': // Diagonale haut-gauche
-        if (x > 0 && y > 0 && Mat[x - 1][y - 1] != kWall) { --x; --y; }
-        break;
-    case 'e': // Diagonale haut-droite
-        if (x > 0 && y < Mat[0].size() - 1 && Mat[x - 1][y + 1] != kWall) { --x; ++y; }
-        break;
-    case 'w': // Diagonale bas-gauche
-        if (x < Mat.size() - 1 && y > 0 && Mat[x + 1][y - 1] != kWall) { ++x; --y; }
-        break;
-    case 'c': // Diagonale bas-droite
-        if (x < Mat.size() - 1 && y < Mat[0].size() - 1 && Mat[x + 1][y + 1] != kWall) { ++x; ++y; }
+        if (isValidMove(Mat, x, y + 1)) ++y;
+        else extraTurns = true; // Effet miroir sur la droite
         break;
     default:
         cout << "Mouvement invalide." << endl;
         break;
     }
 
-    pos = {x, y};
-    Mat[x][y] = kTokenPlayer1;
+    pos = {x, y}; // Met à jour la position
+    Mat[x][y] = kTokenPlayer1; // Marque la nouvelle position du joueur
 }
 
-void initMat(CMatrix &Mat, unsigned nbLine, unsigned nbColumn, CPosition &posPlayer1, CPosition &posPlayer2, vector<CPosition> &walls, vector<CPosition> &bonus) {
-    Mat.resize(nbLine, CVLine(nbColumn, kEmpty));
-    Mat[posPlayer1.first][posPlayer1.second] = kTokenPlayer1;
-    Mat[posPlayer2.first][posPlayer2.second] = kTokenPlayer2;
-    for (const auto &wall : walls) {
-        Mat[wall.first][wall.second] = kWall;
-    }
-    for (const auto &b : bonus) {
-        Mat[b.first][b.second] = kBonus;
-    }
-}
-
-void showMatrix(const CMatrix &Mat) {
-    clearScreen();
-    for (size_t i = 0; i < Mat.size(); ++i) {
-        for (size_t j = 0; j < Mat[i].size(); ++j) {
-            if (Mat[i][j] == kTokenPlayer1) {
-                couleur(KRouge);
-                cout << kTokenPlayer1;
-                couleur(KReset);
-            } else if (Mat[i][j] == kTokenPlayer2) {
-                couleur(KBleu);
-                cout << kTokenPlayer2;
-                couleur(KReset);
-            } else if (Mat[i][j] == kWall) {
-                couleur(KJaune);
-                cout << kWall;
-                couleur(KReset);
-            } else if (Mat[i][j] == kBonus) {
-                couleur(KMagenta);
-                cout << kBonus;
-                couleur(KReset);
-            } else {
-                cout << kEmpty;
-            }
-        }
-        cout << endl;
+void handleBonus(CMatrix &Mat, CPosition &pos) {
+    if (Mat[pos.first][pos.second] == kBonusMagenta) {
+        cout << "Vous avez gagné 1 tour supplémentaire !\n";
+        Mat[pos.first][pos.second] = kEmpty; // Retire le bonus de la grille
+    } else if (Mat[pos.first][pos.second] == kBonusRed) {
+        cout << "Vous avez gagné 2 tours supplémentaires !\n";
+        Mat[pos.first][pos.second] = kEmpty; // Retire le bonus de la grille
+    } else if (Mat[pos.first][pos.second] == kBonusGreen) {
+        cout << "Vous avez gagné 3 tours supplémentaires !\n";
+        Mat[pos.first][pos.second] = kEmpty; // Retire le bonus de la grille
     }
 }
 
 void displayRules() {
     cout << "Bienvenue dans le jeu ! Voici les règles :\n";
-    cout << "- Le joueur 1 est humain, le joueur 2 est l'IA.\n";
-    cout << "- Vous pouvez vous déplacer avec les touches Z, S, Q, D (haut, bas, gauche, droite), ou les touches pour les déplacements diagonaux : A, E, W, C.\n";
-    cout << "- Des bonus apparaissent aléatoirement sur la grille. Vous pouvez déplacer deux fois si vous touchez un bonus.\n";
-    cout << "- Des murs sont présents pour bloquer les déplacements.\n";
-    cout << "- L'IA tente de vous capturer en vous 'mangeant' (en atteignant votre position).\n";
-    cout << "- Le jeu se termine quand un joueur atteint l'autre joueur.\n\n";
-}
-
-void disableEnter() {
-    struct termios oldt, newt;
-    tcgetattr(STDIN_FILENO, &oldt);
-    newt = oldt;
-    newt.c_lflag &= ~(ICANON | ECHO);
-    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
-}
-
-void restoreEnter() {
-    struct termios oldt;
-    tcgetattr(STDIN_FILENO, &oldt);
-    oldt.c_lflag |= ICANON | ECHO;
-    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
-}
-
-char getKey() {
-    char buf = 0;
-    disableEnter();
-    if (read(STDIN_FILENO, &buf, 1) < 0) {
-        cout << "Erreur de lecture.\n";
-    }
-    restoreEnter();
-    return buf;
+    cout << "- Utilisez les touches Z, S, Q, D pour vous déplacer.\n";
+    cout << "- Vous pouvez aussi vous déplacer en diagonale avec A, E, W, C.\n";
+    cout << "- Les murs bloquent votre déplacement.\n";
+    cout << "- L'objectif est de capturer l'autre joueur.\n";
+    cout << "- Des murs et des bonus apparaissent aléatoirement.\n";
+    cout << "- L'effet miroir : si vous essayez de vous déplacer hors de la grille, vous êtes " 
+         << "ramené à l'autre côté.\n";
+    cout << "- Les bonus : \n";
+    cout << "  * Bonus Magenta : 1 tour supplémentaire\n";
+    cout << "  * Bonus Rouge : 2 tours supplémentaires\n";
+    cout << "  * Bonus Vert : 3 tours supplémentaires\n";
+    cout << endl;
 }
 
 int main() {
@@ -237,23 +271,25 @@ int main() {
 
     CMatrix Mat;
     CPosition posPlayer1(0, 0), posPlayer2(nbLine - 1, nbColumn - 1);
-    vector<CPosition> walls = {{3, 3}, {4, 4}, {5, 5}, {6, 2}};
-    vector<CPosition> bonus = {{2, 2}, {7, 5}};
-    const unsigned nbMax = nbLine * nbColumn; // L'aire de la matrice détermine le nombre de coups maximum
-    unsigned nbCoup = 1;
-    bool victoire = false;
-    int joueur = 1;
+    unsigned nbWalls = (nbLine * nbColumn) / 10;  // 10% de la carte
+    unsigned nbBonus = (nbLine * nbColumn) / 15;  // 6.67% de la carte
 
-    initMat(Mat, nbLine, nbColumn, posPlayer1, posPlayer2, walls, bonus);
+    initMat(Mat, nbLine, nbColumn, posPlayer1, posPlayer2, nbWalls, nbBonus);
     showMatrix(Mat);
-    string move;
 
-    while (nbCoup < nbMax && !victoire) {
+    string move;
+    unsigned nbCoup = 1;
+    int joueur = 1;
+    bool victoire = false;
+    bool extraTurns = false;
+
+    while (nbCoup < nbLine * nbColumn && !victoire) {
         cout << "Coup numero " << nbCoup << endl;
         if (joueur == 1) {
             cout << "Coup du joueur 1 : ";
-            char moveChar = getKey();
-            moveToken(Mat, moveChar, posPlayer1);
+            char moveChar = getKey();  // Appel à getKey() pour une entrée sans Entrée
+            moveToken(Mat, moveChar, posPlayer1, extraTurns);
+            handleBonus(Mat, posPlayer1); // Gère l'effet des bonus
             joueur = 2;
         } else {
             moveAI(Mat, posPlayer2, posPlayer1);
@@ -264,6 +300,10 @@ int main() {
             victoire = true;
         }
         ++nbCoup;
+        if (extraTurns) {
+            nbCoup -= 1; // Si un joueur a des tours supplémentaires, il rejoue
+            extraTurns = false;
+        }
     }
 
     if (victoire) {
