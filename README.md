@@ -54,13 +54,16 @@ rajoutez "[X]" si vous avez effectué une amélioration
 
 - Transformer le joueur 2 en IA.
 - Si le joueur 2 est une IA, rajouter un highScore pour le joueur qui a survecu le plus longtemps.
+- Proposer à l'utilisateur s'il veut chasser l'IA ou être chasser par l'IA
 - Proposer de choisir entre 1v1 et Vs IA
 - Rajouter des bonus qui apparaissent aléatoirement sur certaines cases (exemple de bonus, un joueur peut se deplacer deux fois).
 - Rajouter des murs.
 - "Termios" de Maxime <=> pas besoin d'appuyer sur *Entrée* à chaque coup.
-- [X] Avant de lancer la partie, demander à l'utilisateur la taille de la carte (=Matrice)
-- Egalement au lancement du programme, on peut afficher un message qui explique les règles (bonus, miroir, mur, deplacement interdit...)
-- Passer à une vraie interface graphique avec MinGL
+- [X] Avant de lancer la partie, demander à l'utilisateur la taille de la carte (=Matrice).
+- Egalement au lancement du programme, on peut afficher un message qui explique les règles (bonus, miroir, mur, deplacement interdit...).
+- Passer à une vraie interface graphique avec MinGL.
+- Faire un mode ou le chasseur et le chassé échangent tous les x tours.
+
 
     
 
