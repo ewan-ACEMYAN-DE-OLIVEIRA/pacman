@@ -7,6 +7,23 @@ void clearScreen () {
     cout << "\033[H\033[2J";
 }
 
+const unsigned KReset   (0);
+const unsigned KNoir    (30);
+const unsigned KRouge   (31);
+const unsigned KVert    (32);
+const unsigned KJaune   (33);
+const unsigned KBleu    (34);
+const unsigned KMAgenta (35);
+const unsigned KCyan    (36);
+
+void couleur (const unsigned & coul) {
+    cout << "\033[" << coul <<"m";
+}
+
+typedef vector <char> CVLine; // un type représentant une ligne de la grille
+typedef vector <CVLine> CMatrix; // un type représentant la grille
+typedef pair   <unsigned, unsigned> CPosition; // un type représentant une coordonnée dans la grille
+
 const char kTokenPlayer1 = 'X';
 const char kTokenPlayer2 = 'O';
 const char kEmpty        = '+';
@@ -150,4 +167,3 @@ int main() {
     ppal();
     return 0;
 }
-
