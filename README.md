@@ -50,13 +50,14 @@ Contenu du rendu
     
 <h2>Amelioration TP10</h2>
 
-    - Transformer le joueur 2 en IA.
-    - Si le joueur 2 est une IA, rajouter un highScore pour le joueur qui a survecu le plus longtemps.
-    - Rajouter des bonus qui apparaissent aléatoirement sur certaines cases (exemple de bonus, un joueur peut se deplacer deux fois).
-    - Rajouter des murs.
-    - "Termios" de Maxime <=> pas besoin d'appuyer sur *Entrée* à chaque coup.
-    - Avant de lancer la partie, demander à l'utilisateur la taille de la carte (=Matrice)
-    - Passer à une vraie interface graphique avec MinGL
-    - 
+- Transformer le joueur 2 en IA.
+- Si le joueur 2 est une IA, rajouter un highScore pour le joueur qui a survecu le plus longtemps.
+- Rajouter des bonus qui apparaissent aléatoirement sur certaines cases (exemple de bonus, un joueur peut se deplacer deux fois).
+- Rajouter des murs.
+- "Termios" de Maxime <=> pas besoin d'appuyer sur *Entrée* à chaque coup.
+- Avant de lancer la partie, demander à l'utilisateur la taille de la carte (=Matrice)
+- Egalement au lancement du programme, on peut afficher un message qui explique les règles (bonus, miroir, mur, deplacement interdit...)
+- Passer à une vraie interface graphique avec MinGL
+
     
 
