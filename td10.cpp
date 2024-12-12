@@ -27,6 +27,7 @@ typedef pair   <unsigned, unsigned> CPosition; // un type représentant une coor
 const char kTokenPlayer1 = 'X';
 const char kTokenPlayer2 = 'O';
 const char kEmpty        = '+';
+const char kWall         = '/';
 
 void  showMatrix (const CMatrix & Mat){
     clearScreen();
@@ -56,63 +57,70 @@ void initMat (CMatrix & Mat, unsigned nbLine, unsigned nbColumn, CPosition & pos
     Mat[posPlayer2.first][posPlayer2.second] = kTokenPlayer2;
 }
 
-void moveToken (CMatrix & Mat, char move, CPosition  & pos){
+void moveToken(CMatrix &Mat, char move, CPosition &pos) {
     char element = Mat[pos.first][pos.second];
     Mat[pos.first][pos.second] = kEmpty;
-    switch(tolower(move))
-    {
-    case 'a':
-        if(!(pos.first < 1 || pos.second < 1)){
+    switch(tolower(move)) {
+    case 'a': // Diagonal haut-gauche
+        if (pos.first > 0 && pos.second > 0 && Mat[pos.first - 1][pos.second - 1] != kWall) {
             pos.first -= 1;
             pos.second -= 1;
         }
         break;
-    case 'z':
-        if(pos.first < 1){
-            pos.first = Mat.size()-1;
+    case 'z': // Haut
+        if (pos.first == 0) {
+            if (Mat[Mat.size()-1][pos.second]!=kWall){
+                pos.first = Mat.size() - 1;
+            }
         }
-        else{
+        else if (Mat[pos.first - 1][pos.second] != kWall) {
             pos.first -= 1;
         }
         break;
-    case 'e':
-        if(!(pos.first < 1 || pos.second > Mat[0].size()-2)){
+    case 'e': // Diagonal haut-droite
+        if (pos.first > 0 && pos.second < Mat[0].size() - 1 && Mat[pos.first - 1][pos.second + 1] != kWall) {
             pos.first -= 1;
             pos.second += 1;
         }
         break;
-    case 'q':
-        if(pos.second < 1){
-            pos.second = Mat[0].size()-1;
+    case 'q': // Gauche
+        if (pos.second == 0) {
+            if(Mat[pos.first][Mat[0].size()-1]!=kWall){
+                pos.second = Mat[0].size() - 1;
+            }
         }
-        else{
+        else if (Mat[pos.first][pos.second - 1] != kWall) {
             pos.second -= 1;
         }
         break;
-    case 'd':
-        if(pos.second > Mat[0].size()-2){
-            pos.second = 0;
+    case 'd': // Droite
+        if (pos.second == Mat[0].size() - 1) {
+            if (Mat[pos.first][0]!=kWall){
+                pos.second = 0;
+            }
         }
-        else{
+        else if (Mat[pos.first][pos.second + 1] != kWall) {
             pos.second += 1;
         }
         break;
-    case 'w':
-        if(!(pos.first > Mat.size()-2 || pos.second < 1)){
+    case 'w': // Diagonal bas-gauche
+        if ((pos.first < Mat.size() - 1 && pos.second > 0) && Mat[pos.first + 1][pos.second - 1] != kWall) {
             pos.first += 1;
             pos.second -= 1;
         }
         break;
-    case 'x':
-        if(pos.first > Mat.size()-2){
-            pos.first = 0;
+    case 'x': // Bas
+        if (pos.first == Mat.size() - 1) {
+            if (Mat[0][pos.second]!=kWall){
+                pos.first = 0;
+            }
         }
-        else{
+        else if (Mat[pos.first + 1][pos.second] != kWall) {
             pos.first += 1;
         }
         break;
-    case 'c':
-        if(!(pos.first > Mat.size()-2 || pos.second > Mat[0].size()-2)){
+    case 'c': // Diagonal bas-droite
+        if (pos.first < Mat.size() - 1 && pos.second < Mat[0].size() - 1 && Mat[pos.first + 1][pos.second + 1] != kWall) {
             pos.first += 1;
             pos.second += 1;
         }
