@@ -123,12 +123,16 @@ void moveToken (CMatrix & Mat, char move, CPosition  & pos){
 
 int ppal(){
     CMatrix Mat;
-    unsigned nbLine = 10;
-    unsigned nbColumn = 8;
+    unsigned nbLine;
+    unsigned nbColumn;
+    cout << "Rentrez la largeur de la carte (en ligne) : ";
+    cin >> nbLine;
+    cout << "Rentrez la hauteur de la carte (en colonne) : ";
+    cin >> nbColumn;
     CPosition posPlayer1;
     CPosition posPlayer2;
     posPlayer1 = CPosition(0, 0);
-    posPlayer2 = CPosition(9, 7);
+    posPlayer2 = CPosition(nbLine-1, nbColumn-1);
     const unsigned nbMax = 20;
     unsigned nbCoup = 1;
     bool victoire = false;
