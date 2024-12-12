@@ -50,7 +50,7 @@ Contenu du rendu
     
 <h2>Amelioration TP10</h2>
 
-rajoutez "X" si vous avez effectué une amélioration
+rajoutez "[X]" si vous avez effectué une amélioration
 
 - Transformer le joueur 2 en IA.
 - Si le joueur 2 est une IA, rajouter un highScore pour le joueur qui a survecu le plus longtemps.
