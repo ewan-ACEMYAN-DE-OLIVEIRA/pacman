@@ -22,7 +22,7 @@ void couleur (const unsigned & coul) {
 
 typedef vector <char> CVLine; // un type représentant une ligne de la grille
 typedef vector <CVLine> CMatrix; // un type représentant la grille
-typedef pair   <unsigned, unsigned> CPosition; // un type représentant une coordonnée dans la grille
+typedef pair <unsigned, unsigned> CPosition; // un type représentant une coordonnée dans la grille
 
 const char kTokenPlayer1 = 'X';
 const char kTokenPlayer2 = 'O';
@@ -30,31 +30,31 @@ const char kEmpty        = '+';
 const char kWall         = '/';
 const char kBonus        = '*';
 
-void  showMatrix (const CMatrix & Mat){
+void showMatrix (const CMatrix & Mat) {
     clearScreen();
     for(auto i=0; i<Mat.size(); ++i){
         for(auto j=0; j<Mat[i].size(); ++j){
-            if (Mat[i][j]== kTokenPlayer1){
+            if (Mat[i][j] == kTokenPlayer1) {
                 couleur(KRouge);
                 cout << kTokenPlayer1;
                 couleur (KReset);
             }
-            else if (Mat[i][j]== kTokenPlayer2){
+            else if (Mat[i][j] == kTokenPlayer2) {
                 couleur(KBleu);
                 cout << kTokenPlayer2;
                 couleur (KReset);
             }
-            else if (Mat[i][j]==kWall){
+            else if (Mat[i][j] == kWall) {
                 couleur(KJaune);
                 cout << kWall;
                 couleur(KReset);
             }
-            else if (Mat[i][j]==kBonus){
+            else if (Mat[i][j] == kBonus) {
                 couleur(KMagenta);
                 cout << kBonus;
                 couleur(KReset);
             }
-            else{
+            else {
                 cout << kEmpty;
             }
         }
@@ -65,7 +65,7 @@ void  showMatrix (const CMatrix & Mat){
 void initMat(CMatrix &Mat, unsigned nbLine, unsigned nbColumn, CPosition &posPlayer1, CPosition &posPlayer2) {
     Mat.resize(nbLine, CVLine(nbColumn, kEmpty));
 
-    // Remplir une ligne sur deux avec des kWall
+    // Remplir une ligne sur deux avec des kBonus
     for (unsigned i = 0; i < nbLine; ++i) {
         if (i % 2 != 0) {  // Si la ligne est impaire
             for (unsigned j = 0; j < nbColumn; ++j) {
@@ -80,7 +80,7 @@ void initMat(CMatrix &Mat, unsigned nbLine, unsigned nbColumn, CPosition &posPla
     Mat[posPlayer2.first][posPlayer2.second] = kTokenPlayer2;
 }
 
-void moveToken(CMatrix &Mat, char move, CPosition &pos) {
+void moveToken(CMatrix &Mat, char move, CPosition &pos, bool &rejouer) {
     char element = Mat[pos.first][pos.second];
     Mat[pos.first][pos.second] = kEmpty;
     switch(tolower(move)) {
@@ -92,7 +92,7 @@ void moveToken(CMatrix &Mat, char move, CPosition &pos) {
         break;
     case 'z': // Haut
         if (pos.first == 0) {
-            if (Mat[Mat.size()-1][pos.second]!=kWall){
+            if (Mat[Mat.size()-1][pos.second] != kWall) {
                 pos.first = Mat.size() - 1;
             }
         }
@@ -108,7 +108,7 @@ void moveToken(CMatrix &Mat, char move, CPosition &pos) {
         break;
     case 'q': // Gauche
         if (pos.second == 0) {
-            if(Mat[pos.first][Mat[0].size()-1]!=kWall){
+            if (Mat[pos.first][Mat[0].size() - 1] != kWall) {
                 pos.second = Mat[0].size() - 1;
             }
         }
@@ -118,7 +118,7 @@ void moveToken(CMatrix &Mat, char move, CPosition &pos) {
         break;
     case 'd': // Droite
         if (pos.second == Mat[0].size() - 1) {
-            if (Mat[pos.first][0]!=kWall){
+            if (Mat[pos.first][0] != kWall) {
                 pos.second = 0;
             }
         }
@@ -127,14 +127,14 @@ void moveToken(CMatrix &Mat, char move, CPosition &pos) {
         }
         break;
     case 'w': // Diagonal bas-gauche
-        if ((pos.first < Mat.size() - 1 && pos.second > 0) && Mat[pos.first + 1][pos.second - 1] != kWall) {
+        if (pos.first < Mat.size() - 1 && pos.second > 0 && Mat[pos.first + 1][pos.second - 1] != kWall) {
             pos.first += 1;
             pos.second -= 1;
         }
         break;
     case 'x': // Bas
         if (pos.first == Mat.size() - 1) {
-            if (Mat[0][pos.second]!=kWall){
+            if (Mat[0][pos.second] != kWall) {
                 pos.first = 0;
             }
         }
@@ -149,6 +149,12 @@ void moveToken(CMatrix &Mat, char move, CPosition &pos) {
         }
         break;
     }
+    if (Mat[pos.first][pos.second] == kBonus) {
+        rejouer = true;
+        Mat[pos.first][pos.second] = kEmpty; // Enlever le bonus après l'avoir pris
+    } else {
+        rejouer = false;
+    }
     Mat[pos.first][pos.second] = element;
 }
 
@@ -156,65 +162,64 @@ int ppal(){
     CMatrix Mat;
     unsigned nbLine = 10;
     unsigned nbColumn = 8;
-    CPosition posPlayer1;
-    CPosition posPlayer2;
-    posPlayer1 = CPosition(0, 0);
-    posPlayer2 = CPosition(9, 7);
+    CPosition posPlayer1(0, 0);
+    CPosition posPlayer2(9, 7);
     const unsigned nbMax = 20;
     unsigned nbCoup = 1;
     bool victoire = false;
+    bool rejouer = false;
     int joueur = 1;
     initMat(Mat, nbLine, nbColumn, posPlayer1, posPlayer2);
     showMatrix(Mat);
     string move;
-    while(nbCoup<nbMax && !victoire){
+
+    while(nbCoup < nbMax && !victoire){
         cout << "Coup numero " << nbCoup << endl;
         cout << "Coup du joueur " << joueur << " : ";
         getline(cin, move);
         cout << endl;
-        if(joueur==1){
-            moveToken(Mat, move[0], posPlayer1);
-            cout<<"helloworld"<<endl;
-            while (Mat[posPlayer1.first][posPlayer1.second] == kBonus) {
-                cout << "Rejoue, joueur " << joueur << " : ";
-                Mat[posPlayer1.first][posPlayer1.second] = kEmpty; // Remove the bonus
+
+        if (joueur == 1) {
+            moveToken(Mat, move[0], posPlayer1, rejouer);
+            while (rejouer) {
                 showMatrix(Mat);
+                cout << "Rejoue, joueur " << joueur << " : ";
                 getline(cin, move);
                 cout << endl;
-                moveToken(Mat, move[0], posPlayer1);
+                moveToken(Mat, move[0], posPlayer1, rejouer);
             }
             joueur = 2;
-        }
-        else{
-            moveToken(Mat, move[0], posPlayer2);
-            while (Mat[posPlayer2.first][posPlayer2.second] == kBonus) {
-                cout << "Rejoue, joueur " << joueur << " : ";
-                Mat[posPlayer1.first][posPlayer1.second] = kEmpty; // Remove the bonus
+        } else {
+            moveToken(Mat, move[0], posPlayer2, rejouer);
+            while (rejouer) {
                 showMatrix(Mat);
+                cout << "Rejoue, joueur " << joueur << " : ";
                 getline(cin, move);
                 cout << endl;
-                moveToken(Mat, move[0], posPlayer2);
+                moveToken(Mat, move[0], posPlayer2, rejouer);
             }
             joueur = 1;
         }
+
         showMatrix(Mat);
 
-        if(posPlayer1 == posPlayer2)
+        if (posPlayer1 == posPlayer2) {
             victoire = true;
-        else
+        } else {
             ++nbCoup;
+        }
     }
-    if (victoire){
-        cout<<"Victoire Royale"<<endl;
+
+    if (victoire) {
+        cout << "Victoire Royale" << endl;
+    } else {
+        cout << "Match nul!" << endl;
     }
-    else{
-        cout<<"match nul!"<<endl;
-    }
+
     return 0;
 }
 
 int main() {
-    cout<<"hello world";
     ppal();
     return 0;
 }
