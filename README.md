@@ -60,6 +60,7 @@ rajoutez "[X]" si vous avez effectué une amélioration
 - Pouvoir choisir la taille de la map ( matrice )
 - Explication des règles au préalable.
 - Interface graphique via Mingl.
+- Rajouter des sons avec Mingl.
 - Mode de jeu ChasseurVSChassé : alterner les tours tous les x tours selon le nombre de coups total possible.
 
 
