@@ -1,5 +1,6 @@
 // Choses à faire :
 // Initialiser une touche pour quitter l'onglet règles, lore etc ...
+// Faire en sorte d'afficher un message si la taille de la grille est trop petite 
 #include <iostream>
 #include <termios.h>
 #include <unistd.h>
