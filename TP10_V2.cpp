@@ -1,3 +1,5 @@
+// Choses à faire : 
+// Initialiser une touche pour quitter l'onglet règles, lore etc ... 
 #include <iostream>
 #include <termios.h>
 #include <unistd.h>
@@ -180,19 +182,21 @@ int ppal() {
         move = entree(move);
 
         if (move == 'm') {
+            // Affichage du coup numéro 1 en rouge
+            cout << endl;
+            couleur(KRouge);  // Utilisation de la couleur rouge ici
+            cout << "Coup numero 1" << endl;
+            couleur(KReset);
             break; // Commencer le jeu
         }
         if (move == 'n') {
             showRules();
         }
-
     }
+
     while (nbCoup < nbMax && !victoire) {
         move = entree(move);
-        if (move == 27 || move == 8 || move == 127 || move == 13 || move == 10) { // le code ASCII des touches pour quitter
-            cout << "\nQuitter...\n";
-            break;
-        }
+
         cout << endl;
         if (nbCoup % 2 == 1) {
             moveToken(Mat, move, posPlayer1);
@@ -213,7 +217,7 @@ int ppal() {
             cout << "Coup numero " << nbCoup << endl;
             couleur(KReset);
         }
-        cout << "Coup du joueur " << joueur << " : ";
+        cout << "Coup du joueur" << joueur << " : ";
         if (posPlayer1 == posPlayer2)
             victoire = true;
         ++nbCoup;
