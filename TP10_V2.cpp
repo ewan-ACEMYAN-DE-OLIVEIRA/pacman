@@ -8,7 +8,7 @@
 
 using namespace std;
 
-void clearScreen() {
+void clearScreen () {
     cout << "\033[H\033[2J";
 }
 
@@ -21,13 +21,13 @@ const unsigned KBleu    (34);
 const unsigned KMAgenta (35);
 const unsigned KCyan    (36);
 
-void couleur(const unsigned &coul) {
-    cout << "\033[" << coul << "m";
+void couleur (const unsigned & coul) {
+    cout << "\033[" << coul <<"m";
 }
 
-typedef vector<char> CVLine; // un type représentant une ligne de la grille
-typedef vector<CVLine> CMatrix; // un type représentant la grille
-typedef pair<unsigned, unsigned> CPosition; // un type représentant une coordonnée dans la grille
+typedef vector <char> CVLine; // un type représentant une ligne de la grille
+typedef vector <CVLine> CMatrix; // un type représentant la grille
+typedef pair   <unsigned, unsigned> CPosition; // un type représentant une coordonnée dans la grille
 
 void configureTerminal(bool enable) {
     struct termios touche;
@@ -49,23 +49,29 @@ int entree(char c) {
 
 const char kTokenPlayer1 = 'X';
 const char kTokenPlayer2 = 'O';
-const char kEmpty = '+';
+const char kEmpty        = '+';
+const char kWall         = '/';
 
-void showMatrix(const CMatrix &Mat) {
+void  showMatrix (const CMatrix & Mat){
     clearScreen();
-    for (auto i = 0; i < Mat.size(); ++i) {
-        for (auto j = 0; j < Mat[i].size(); ++j) {
-            if (Mat[i][j] == kTokenPlayer1) {
+    for(auto i=0; i<Mat.size(); ++i){
+        for(auto j=0; j<Mat[i].size(); ++j){
+            if (Mat[i][j]== kTokenPlayer1){
                 couleur(KRouge);
                 cout << kTokenPlayer1;
-                couleur(KReset);
+                couleur (KReset);
             }
-            else if (Mat[i][j] == kTokenPlayer2) {
+            else if (Mat[i][j]== kTokenPlayer2){
                 couleur(KBleu);
                 cout << kTokenPlayer2;
+                couleur (KReset);
+            }
+            else if (Mat[i][j]==kWall){
+                couleur(KJaune);
+                cout << kWall;
                 couleur(KReset);
             }
-            else {
+            else{
                 cout << kEmpty;
             }
         }
@@ -73,68 +79,87 @@ void showMatrix(const CMatrix &Mat) {
     }
 }
 
-void initMat(CMatrix &Mat, unsigned nbLine, unsigned nbColumn, CPosition &posPlayer1, CPosition &posPlayer2) {
+unsigned randomRange (const unsigned& min, const unsigned& max) {
+    return min + rand() % (max-min);
+}
+
+void initMat (CMatrix & Mat, unsigned nbLine, unsigned nbColumn, CPosition & posPlayer1, CPosition & posPlayer2){
     Mat.resize(nbLine, CVLine(nbColumn, kEmpty));
+
+    unsigned borneMinRandom = 1;
+    unsigned borneMaxRandom = 6;
+
+    // Remplir aléatoirement avec des kWall
+    for (unsigned i = 0; i < nbLine; ++i) {
+        for (unsigned j = 0; j < nbColumn; ++j) {
+            if (randomRange(borneMinRandom, borneMaxRandom) == randomRange(borneMinRandom, borneMaxRandom)) {
+                Mat[i][j] = kWall;
+            }
+        }
+    }
+    // Placer les joueurs
     Mat[posPlayer1.first][posPlayer1.second] = kTokenPlayer1;
     Mat[posPlayer2.first][posPlayer2.second] = kTokenPlayer2;
 }
 
-void moveToken(CMatrix &Mat, char move, CPosition &pos) {
+
+void moveToken (CMatrix & Mat, char move, CPosition  & pos){
     char element = Mat[pos.first][pos.second];
     Mat[pos.first][pos.second] = kEmpty;
-    switch (tolower(move)) {
+    switch(tolower(move))
+    {
     case 'a':
-        if (!(pos.first < 1 || pos.second < 1)) {
+        if(!(pos.first < 1 || pos.second < 1)){
             pos.first -= 1;
             pos.second -= 1;
         }
         break;
     case 'z':
-        if (pos.first < 1) {
-            pos.first = Mat.size() - 1;
+        if(pos.first < 1){
+            pos.first = Mat.size()-1;
         }
-        else {
+        else{
             pos.first -= 1;
         }
         break;
     case 'e':
-        if (!(pos.first < 1 || pos.second > Mat[0].size() - 2)) {
+        if(!(pos.first < 1 || pos.second > Mat[0].size()-2)){
             pos.first -= 1;
             pos.second += 1;
         }
         break;
     case 'q':
-        if (pos.second < 1) {
-            pos.second = Mat[0].size() - 1;
+        if(pos.second < 1){
+            pos.second = Mat[0].size()-1;
         }
-        else {
+        else{
             pos.second -= 1;
         }
         break;
     case 'd':
-        if (pos.second > Mat[0].size() - 2) {
+        if(pos.second > Mat[0].size()-2){
             pos.second = 0;
         }
-        else {
+        else{
             pos.second += 1;
         }
         break;
     case 'w':
-        if (!(pos.first > Mat.size() - 2 || pos.second < 1)) {
+        if(!(pos.first > Mat.size()-2 || pos.second < 1)){
             pos.first += 1;
             pos.second -= 1;
         }
         break;
     case 'x':
-        if (pos.first > Mat.size() - 2) {
+        if(pos.first > Mat.size()-2){
             pos.first = 0;
         }
-        else {
+        else{
             pos.first += 1;
         }
         break;
     case 'c':
-        if (!(pos.first > Mat.size() - 2 || pos.second > Mat[0].size() - 2)) {
+        if(!(pos.first > Mat.size()-2 || pos.second > Mat[0].size()-2)){
             pos.first += 1;
             pos.second += 1;
         }
@@ -156,7 +181,8 @@ void showRules() {
          << "Chaque mouvement doit être planifié stratégiquement pour contourner les murs (représentant des obstacles ou des zones surveillées), et les téléportations (déplacements rapides entre les différents niveaux de la ville) doivent être utilisées judicieusement pour éviter les impasses et les pièges tendus par l'ennemi.\n";
 }
 
-int ppal() {
+int ppal(){
+    srand(time(NULL));
     CMatrix Mat;
     unsigned nbLine;
     unsigned nbColumn;
@@ -164,11 +190,11 @@ int ppal() {
     cin >> nbLine;
     cout << "Rentrez la hauteur de la carte (en colonne) : ";
     cin >> nbColumn;
-    configureTerminal(false); // Désactiver le mode canonique
+     configureTerminal(false); // Désactiver le mode canonique
     CPosition posPlayer1;
     CPosition posPlayer2;
     posPlayer1 = CPosition(0, 0);
-    posPlayer2 = CPosition(nbLine - 1, nbColumn - 1);
+    posPlayer2 = CPosition(nbLine-1, nbColumn-1);
     const unsigned nbMax = 20;
     unsigned nbCoup = 1;
     bool victoire = false;
@@ -177,26 +203,23 @@ int ppal() {
     showMatrix(Mat);
     char move;
     cout << "Appuyez sur 'm' pour commencer le jeu ou 'n' pour lire les règles.\n";
-
     while (true) {
         move = entree(move);
 
         if (move == 'm') {
-            // Affichage du coup numéro 1 en rouge
-            cout << endl;
-            couleur(KRouge);  // Utilisation de la couleur rouge ici
-            cout << "Coup numero 1" << endl;
-            couleur(KReset);
             break; // Commencer le jeu
         }
         if (move == 'n') {
             showRules();
         }
-    }
 
+    }
     while (nbCoup < nbMax && !victoire) {
         move = entree(move);
-
+        if (move == 27 || move == 8 || move == 127 || move == 13 || move == 10) { // le code ASCII des touches pour quitter
+            cout << "\nQuitter...\n";
+            break;
+        }
         cout << endl;
         if (nbCoup % 2 == 1) {
             moveToken(Mat, move, posPlayer1);
@@ -217,24 +240,22 @@ int ppal() {
             cout << "Coup numero " << nbCoup << endl;
             couleur(KReset);
         }
-        cout << "Coup du joueur" << joueur << " : ";
+        cout << "Coup du joueur " << joueur << " : ";
         if (posPlayer1 == posPlayer2)
             victoire = true;
         ++nbCoup;
     }
-
-    if (victoire) {
-        cout << "Victoire Royale" << endl;
+    if (victoire){
+        cout<<"Victoire Royale"<<endl;
     }
-    else {
-        cout << "Match nul!" << endl;
+    else{
+        cout<<"match nul!"<<endl;
     }
-
     return 0;
 }
 
 int main() {
     ppal();
-    configureTerminal(true);    // Restaurer le terminal
+    configureTerminal(true);
     return 0;
 }
