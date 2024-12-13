@@ -186,10 +186,6 @@ int ppal() {
             showRules();
         }
 
-        if (move == 27 || move == 8 || move == 127 || move == 13 || move == 10) { // le code ASCII des touches pour quitter
-            cout << "\nQuitter...\n";
-            break;
-        }
     }
     while (nbCoup < nbMax && !victoire) {
         move = entree(move);
