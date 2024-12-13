@@ -209,7 +209,7 @@ int ppal(){
     CPosition posPlayer2;
     posPlayer1 = CPosition(0, 0);
     posPlayer2 = CPosition(nbLine-1, nbColumn-1);
-    const unsigned nbMax = 20;
+    const unsigned nbMax = nbLine * nbColumn;
     unsigned nbCoup = 1;
     bool victoire = false;
     string joueur = "bleu";
