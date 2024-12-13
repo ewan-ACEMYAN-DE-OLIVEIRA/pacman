@@ -1,5 +1,5 @@
-// Choses à faire : 
-// Initialiser une touche pour quitter l'onglet règles, lore etc ... 
+// Choses à faire :
+// Initialiser une touche pour quitter l'onglet règles, lore etc ...
 #include <iostream>
 #include <termios.h>
 #include <unistd.h>
@@ -169,8 +169,16 @@ void moveToken (CMatrix & Mat, char move, CPosition  & pos){
 }
 
 void showRules() {
-    cout << "Règles supplémentaires :\n";
-    cout << "Lore :\n"
+    cout << endl << "------------------------" << endl << "Règles supplémentaires :\n" << "------------------------" << endl
+         << "z : se déplacer vers le haut" << endl
+         << "q : se déplacer vers la gauche"<< endl
+         << "x : se déplacer vers le bas" << endl
+         << "d : se déplacer vers la droite" << endl
+         << "a : se déplacer en haut à gauche" << endl
+         << "w : se déplacer en bas à gauche"<< endl
+         << "c : se  déplacer en bas à droite"<< endl
+         << "e : se déplacer en haut à droite" <<endl << "------" << endl;
+    cout << "Lore :\n" << "------" << endl
          << "Nous sommes en 2137. Le monde a irrémédiablement changé avec l'avancée rapide de la technologie et l'urbanisation incessante. Les mégapoles s'étendent jusqu'au ciel, citadelles de verre et d'acier. La société est contrôlée par un réseau de drones, de caméras et d'IA de surveillance qui rend presque impossible toute tentative d'évasion de la part d'un criminel.\n"
          << "À la suite de l'événement désastreux connu sous le nom de Grand Effondrement en 2098, les gouvernements nationaux se sont rassemblés sous la bannière de l'Union Terrienne Unifiée. Il s'agit d'une unité politique mondiale régissant toutes les mégapoles et dotée de forces de sécurité omniprésentes, la Division de la sécurité et de l'ordre public (Security and Public Order Division, SPOD).\n"
          << "Les agents de la SPOD forment un cadre professionnel composé des meilleurs agents, formés aux innovations les plus récentes en matière de combat et de surveillance. Leur mission consiste essentiellement à maintenir l'ordre dans les mégapoles et à traquer les criminels qui osent s'opposer à l'autorité de l'UTU, l'Union Terrestre Unifiée.\n"
@@ -190,7 +198,7 @@ int ppal(){
     cin >> nbLine;
     cout << "Rentrez la hauteur de la carte (en colonne) : ";
     cin >> nbColumn;
-     configureTerminal(false); // Désactiver le mode canonique
+    configureTerminal(false); // Désactiver le mode canonique
     CPosition posPlayer1;
     CPosition posPlayer2;
     posPlayer1 = CPosition(0, 0);
