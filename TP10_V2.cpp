@@ -54,6 +54,7 @@ const char kEmpty        = '+';
 const char kWall         = '/';
 
 void  showMatrix (const CMatrix & Mat){
+    // Cette procédure permet d'afficher la matrice qui correspond à la carte
     clearScreen();
     for(auto i=0; i<Mat.size(); ++i){
         for(auto j=0; j<Mat[i].size(); ++j){
