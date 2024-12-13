@@ -153,11 +153,48 @@ int ppal(){
     const unsigned nbMax = 20;
     unsigned nbCoup = 1;
     bool victoire = false;
-    int joueur = 1;
+    string joueur = "bleu";
     initMat(Mat, nbLine, nbColumn, posPlayer1, posPlayer2);
     showMatrix(Mat);
     char move;
-    cout << "Appuyez sur une touche z,q,s,d (ESC/supp/entree pour quitter)...\n";
+    cout << "Appuyez sur une touche pour commencer !"<< endl << endl
+
+         << "Règles du jeu : " << endl << endl << "Touches : "<< endl << endl
+         << "z : se déplacer vers le haut"
+         << endl
+         << "q : se déplacer vers la gauche"
+         << endl
+         << "x : se déplacer vers le bas"
+         << endl
+         << "d : se déplacer vers la droite"
+         << endl
+         << "a : se déplacer en haut à gauche"
+         << endl
+         << "w : se déplacer en bas à gauche"
+         << endl
+         << "c : se  déplacer en bas à droite"
+         << endl
+         << "e : se déplacer en haut à droite"
+         << endl << endl
+         << "Lore :"
+         << endl << endl
+         << "Nous sommes en 2137. Le monde a irrémédiablement changé avec l'avancée rapide de la technologie et l'urbanisation incessante. Les mégapoles s'étendent jusqu'au ciel, citadelles de verre et d'acier. La société est contrôlée par un réseau de drones, de caméras et d'IA de surveillance qui rend presque impossible toute tentative d'évasion de la part d'un criminel."
+         << endl
+         << "À la suite de l'événement désastreux connu sous le nom de Grand Effondrement en 2098, les gouvernements nationaux se sont rassemblés sous la bannière de l'Union Terrienne Unifiée. Il s'agit d'une unité politique mondiale régissant toutes les mégapoles et dotée de forces de sécurité omniprésentes, la Division de la sécurité et de l'ordre public (Security and Public Order Division, SPOD)."
+         << endl
+         << "Les agents de la SPOD forment un cadre professionnel composé des meilleurs agents, formés aux innovations les plus récentes en matière de combat et de surveillance. Leur mission consiste essentiellement à maintenir l'ordre dans les mégapoles et à traquer les criminels qui osent s'opposer à l'autorité de l'UTU, l'Union Terrestre Unifiée."
+         << endl
+         << "Mais dans ce monde hyperconnecté et surveillé, il existe une faction de renégats qui s'élèvent contre l'oppression : les Cyber-Outlaws. Il s'agit de bandits spécialisés dans la cybernétique, passés maîtres dans l'art de la furtivité et de l'infiltration. Opérant à l'ombre des gratte-ciel, ils utilisent des implants et des gadgets futuristes pour échapper aux griffes de la SPOD, tout cela pour la chute de l'UTU et le rétablissement de la liberté de l'humanité."
+         << endl
+         << "Les Cyber-Outlaws viennent de réussir un hold-up audacieux en volant des données critiques sur une conspiration au sein de l'UEU. Ces informations révèlent des plans clandestins visant à étrangler davantage les citoyens par des mesures répressives. Le SPOD, dirigé par l'infatigable inspecteur Voss, est à leurs trousses, déterminé à récupérer les informations volées et à mettre fin à leurs activités subversives."
+         << endl
+         << "Dans « Cyber-Escape : Futuristic Fugitives », les joueurs doivent choisir leur camp, soit celui d'un agent du SPOD, soit celui d'un membre des Cyber-Outlaws."
+         << endl
+         << "Les agents de la SPOD doivent utiliser leurs compétences de détection avancées et leur puissance de feu pour traquer et appréhender les hors-la-loi. Les cyber-Outlaws doivent faire preuve de furtivité, de piratage et d'ingéniosité pour échapper au SPOD, mener à bien des missions secrètes et dévoiler les sombres secrets de l'UEU."
+         << endl
+         << "Chaque mouvement doit être planifié stratégiquement pour contourner les murs (représentant des obstacles ou des zones surveillées), et les téléportations (déplacements rapides entre les différents niveaux de la ville) doivent être utilisées judicieusement pour éviter les impasses et les pièges tendus par l'ennemi."
+         << endl ;
+
     while(nbCoup<nbMax && !victoire){
         move= entree(move);
         if (move == 27 || move == 8 || move == 127 || move == 13 || move == 10) { //le code ASCII des touches pour quitter
@@ -167,11 +204,11 @@ int ppal(){
         cout << endl;
         if(nbCoup%2 == 1){
             moveToken(Mat, move, posPlayer1);
-            joueur = 2;
+            joueur = "rouge";
         }
         else{
             moveToken(Mat, move, posPlayer2);
-            joueur = 1;
+            joueur = " bleu";
         }
         showMatrix(Mat);
         if(nbCoup%2 == 1){
@@ -203,4 +240,3 @@ int main() {
     configureTerminal(true);    //si jamais pour restaurer le teminal
     return 0;
 }
-
