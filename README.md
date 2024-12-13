@@ -52,17 +52,15 @@ Contenu du rendu
 
 rajoutez "[X]" si vous avez effectué une amélioration
 
-- Transformer le joueur 2 en IA.
-- Si le joueur 2 est une IA, rajouter un highScore pour le joueur qui a survecu le plus longtemps.
-- Proposer à l'utilisateur s'il veut chasser l'IA ou être chasser par l'IA
-- Proposer de choisir entre 1v1 et Vs IA
-- Rajouter des bonus qui apparaissent aléatoirement sur certaines cases (exemple de bonus, un joueur peut se deplacer deux fois).
-- [X] Rajouter des murs.
-- [X] "Termios" de Maxime <=> pas besoin d'appuyer sur *Entrée* à chaque coup.
-- [X] Avant de lancer la partie, demander à l'utilisateur la taille de la carte (=Matrice).
-- [X] Egalement au lancement du programme, on peut afficher un message qui explique les règles (bonus, miroir, mur, deplacement interdit...).
-- Passer à une vraie interface graphique avec MinGL.
-- Faire un mode ou le chasseur et le chassé échangent tous les x tours.
+- 2 ou 3 modes de jeux , un 1v1 , 1vsIA et ChasseurVSChassé.
+- IA utpdate et intelligente. 
+- Bonus aléatoires ( exemple de 2 tours d'affilés ).
+- Murs aléatoires et pas trop présent non plus.
+- Termios pour ne pas à avoir à appuyer sur entrer pour jouer.
+- Pouvoir choisir la taille de la map ( matrice )
+- Explication des règles au préalable.
+- Interface graphique via Mingl.
+- Mode de jeu ChasseurVSChassé : alterner les tours tous les x tours selon le nombre de coups total possible.
 
 
     
