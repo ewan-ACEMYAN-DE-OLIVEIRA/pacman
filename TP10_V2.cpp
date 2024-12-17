@@ -294,11 +294,11 @@ int ppal(){
                 break;
             }
             if(move=='k'){
-                mode_de_jeu=='k';
+                mode_de_jeu='k';
                 break;
             }
             if(move=='l'){
-                mode_de_jeu=='l';
+                mode_de_jeu='l';
                 break;
             }
         }
@@ -388,7 +388,7 @@ int ppal(){
         return 0;
     }
     else if (mode_de_jeu=='l'){
-        showMatrix(Mat);
+        showMatrix(Mat,rejouer);
         couleur(KRouge);
         cout << "Coup numero " << nbCoup << endl;
         couleur(KReset);
@@ -400,7 +400,7 @@ int ppal(){
                 if(move == 'a' || move == 'z' || move == 'e' || move == 'd' || move == 'c' || move == 'x' || move == 'w' || move == 'q'){
                     moveToken(Mat, move, posPlayer1,rejouer);
                     while (rejouer) {
-                        showMatrix(Mat);
+                        showMatrix(Mat,rejouer);
                         cout << "Rejoue, joueur " << joueur << " : ";
                         move = entree(move) ;
                         cout << endl;
@@ -418,7 +418,7 @@ int ppal(){
                 if(move == 'a' || move == 'z' || move == 'e' || move == 'd' || move == 'c' || move == 'x' || move == 'w' || move == 'q'){
                     moveToken(Mat, move, posPlayer2,rejouer);
                     while (rejouer) {
-                        showMatrix(Mat);
+                        showMatrix(Mat,rejouer);
                         cout << "Rejoue, joueur " << joueur << " : ";
                         move = entree(move) ;
                         cout << endl;
@@ -431,7 +431,7 @@ int ppal(){
                     continue ;
                 }
             }
-            showMatrix(Mat);
+            showMatrix(Mat,rejouer);
             if (nbCoup % 2 == 0) {
                 couleur(KBleu);
                 cout << "Coup numero " << nbCoup << endl;
