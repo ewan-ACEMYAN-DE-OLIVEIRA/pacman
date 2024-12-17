@@ -51,6 +51,7 @@ const char kTokenPlayer1 = 'X';
 const char kTokenPlayer2 = 'O';
 const char kEmpty        = '+';
 const char kWall         = '/';
+const char kBonus        = '*';
 
 void  showMatrix (const CMatrix & Mat){
     clearScreen();
@@ -69,6 +70,11 @@ void  showMatrix (const CMatrix & Mat){
             else if (Mat[i][j]==kWall){
                 couleur(KJaune);
                 cout << kWall;
+                couleur(KReset);
+            }
+            else if (Mat[i][j] == kBonus) {
+                couleur(KMagenta);
+                cout << kBonus;
                 couleur(KReset);
             }
             else{
@@ -171,6 +177,12 @@ void moveToken(CMatrix &Mat, char move, CPosition &pos) {
         }
         break;
     }
+    if (Mat[pos.first][pos.second] == kBonus) {
+        rejouer = true;
+        Mat[pos.first][pos.second] = kEmpty;
+    } else {
+        rejouer = false;
+    }
     Mat[pos.first][pos.second] = element;
 }
 
@@ -212,6 +224,7 @@ int ppal(){
     const unsigned nbMax = nbLine * nbColumn;
     unsigned nbCoup= 1;
     bool victoire = false;
+    bool rejouer = false;
     int joueur = 1;
     initMat(Mat, nbLine, nbColumn, posPlayer1, posPlayer2);
     showMatrix(Mat);
@@ -232,30 +245,40 @@ int ppal(){
     while (nbCoup < nbMax && !victoire) {
         ;
 
-        if (nbCoup % 2 == 1) {
+        if (joueur == 1) {
             move = entree(move) ;
             if(move == 'a' || move == 'z' || move == 'e' || move == 'd' || move == 'c' || move == 'x' || move == 'w' || move == 'q'){
                 moveToken(Mat, move, posPlayer1);
-                joueur = 1;
+                while (rejouer) {
+                    showMatrix(Mat);
+                    cout << "Rejoue, joueur " << joueur << " : ";
+                    getline(cin, move);
+                    cout << endl;
+                    moveToken(Mat, move[0], posPlayer1, rejouer);
+                }
+                joueur = 2;
             }
             else{
                 continue ;
             }
-
         }
         else {
 
             move = entree(move) ;
             if(move == 'a' || move == 'z' || move == 'e' || move == 'd' || move == 'c' || move == 'x' || move == 'w' || move == 'q'){
                 moveToken(Mat, move, posPlayer2);
-                joueur = 2;
+                while (rejouer) {
+                    showMatrix(Mat);
+                    cout << "Rejoue, joueur " << joueur << " : ";
+                    getline(cin, move);
+                    cout << endl;
+                    moveToken(Mat, move[0], posPlayer2, rejouer);
+                }
+                joueur = 1;
             }
             else{
                 continue ;
             }
-
-
-
         }
         showMatrix(Mat);
         if (nbCoup % 2 == 1) {
@@ -271,7 +294,8 @@ int ppal(){
         cout << "Coup du joueur " << joueur << " : ";
         if (posPlayer1 == posPlayer2)
             victoire = true;
-        ++nbCoup;
+        else
+            ++nbCoup;
     }
     if (victoire){
         cout<<"Victoire Royale"<<endl;
