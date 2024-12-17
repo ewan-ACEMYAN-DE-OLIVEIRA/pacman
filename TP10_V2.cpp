@@ -288,16 +288,16 @@ int ppal(){
     cout<<"Appuyez sur 'j' pour commencer le mode 1v1, sur 'k' pour commencer le mode 1vIA ou sur 'l' pour le mode ChasseurVChassé\n";
     while(true){
         move=entree(move);
-        if(move=='j' || move=='k' || move=='l'){
-            if(move=='j'){
+        if(tolower(move)=='j' || tolower(move)=='k' || tolower(move)=='l'){
+            if(tolower(move)=='j'){
                 mode_de_jeu='j';
                 break;
             }
-            if(move=='k'){
+            if(tolower(move)=='k'){
                 mode_de_jeu='k';
                 break;
             }
-            if(move=='l'){
+            if(tolower(move)=='l'){
                 mode_de_jeu='l';
                 break;
             }
@@ -319,7 +319,7 @@ int ppal(){
 
             if (joueur == 1) {
                 move = entree(move) ;
-                if(move == 'a' || move == 'z' || move == 'e' || move == 'd' || move == 'c' || move == 'x' || move == 'w' || move == 'q'){
+                if(tolower(move) == 'a' || tolower(move) == 'z' || tolower(move) == 'e' || tolower(move) == 'd' || tolower(move) == 'c' || tolower(move) == 'x' || tolower(move) == 'w' || tolower(move) == 'q'){
                     moveToken(Mat, move, posPlayer1,rejouer);
                     while (rejouer) {
                         cout << "Rejoue, joueur " << joueur << " : ";
@@ -338,7 +338,7 @@ int ppal(){
             }
             else {
                 move = entree(move) ;
-                if(move == 'a' || move == 'z' || move == 'e' || move == 'd' || move == 'c' || move == 'x' || move == 'w' || move == 'q'){
+                if(tolower(move) == 'a' || tolower(move) == 'z' || tolower(move) == 'e' || tolower(move) == 'd' || tolower(move) == 'c' || tolower(move) == 'x' || tolower(move) == 'w' || tolower(move) == 'q'){
                     moveToken(Mat, move, posPlayer2,rejouer);
                     while (rejouer) {
                         cout << "Rejoue, joueur " << joueur << " : ";
