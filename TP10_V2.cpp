@@ -278,19 +278,19 @@ int ppal(){
     cout<<"Appuyez sur 'a' pour commencer le mode 1v1, sur 'b' pour commencer le mode 1vIA ou sur 'c' pour le mode ChasseurVChassé\n";
     while(true){
         move=entree(move);
-        if(move=="j"){
+        if(move=='j'){
             mode_de_jeu='j';
             break;
-        if(move="k"){
-            mode_de_jeu="k";
+        if(move='k'){
+            mode_de_jeu='k';
             break;
         }
-        if(move="l"){
-            mode_de_jeu="l";
+        if(move='l'){
+            mode_de_jeu='l';
             break;
         }
     }
-    if (mode_de_jeu="j"){
+    if (mode_de_jeu='j'){
         showMatrix(Mat);
         couleur(KRouge);
         cout << "Coup numero " << nbCoup << endl;
