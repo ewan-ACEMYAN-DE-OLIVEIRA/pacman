@@ -453,6 +453,10 @@ int ppal(){
                 victoire = true;
             else
                 ++nbCoup;
+            if(nbCoup%10==0){
+                chasseur=(nbCoup/10)%2;
+                cout<<"Le chasseur est le joueur: "<<chasseur+1<<endl;
+            }
         }
         if (victoire)
             cout<<"Le chasseur a gagné!"<<endl;
