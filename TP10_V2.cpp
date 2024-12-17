@@ -210,9 +210,9 @@ int ppal(){
     posPlayer1 = CPosition(0, 0);
     posPlayer2 = CPosition(nbLine-1, nbColumn-1);
     const unsigned nbMax = nbLine * nbColumn;
-    unsigned nbCoup = 1;
+    unsigned nbCoup= 1;
     bool victoire = false;
-    string joueur = "bleu";
+    int joueur = 1;
     initMat(Mat, nbLine, nbColumn, posPlayer1, posPlayer2);
     showMatrix(Mat);
     char move;
@@ -228,20 +228,34 @@ int ppal(){
         }
 
     }
+
     while (nbCoup < nbMax && !victoire) {
-        move = entree(move);
-        if (move == 27 || move == 8 || move == 127 || move == 13 || move == 10) { // le code ASCII des touches pour quitter
-            cout << "\nQuitter...\n";
-            break;
-        }
-        cout << endl;
+        ;
+
         if (nbCoup % 2 == 1) {
-            moveToken(Mat, move, posPlayer1);
-            joueur = "rouge";
+            move = entree(move) ;
+            if(move == 'a' || move == 'z' || move == 'e' || move == 'd' || move == 'c' || move == 'x' || move == 'w' || move == 'q'){
+                moveToken(Mat, move, posPlayer1);
+                joueur = 1;
+            }
+            else{
+                continue ;
+            }
+
         }
         else {
-            moveToken(Mat, move, posPlayer2);
-            joueur = " bleu";
+
+            move = entree(move) ;
+            if(move == 'a' || move == 'z' || move == 'e' || move == 'd' || move == 'c' || move == 'x' || move == 'w' || move == 'q'){
+                moveToken(Mat, move, posPlayer2);
+                joueur = 2;
+            }
+            else{
+                continue ;
+            }
+
+
+
         }
         showMatrix(Mat);
         if (nbCoup % 2 == 1) {
