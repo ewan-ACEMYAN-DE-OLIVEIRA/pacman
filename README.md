@@ -54,7 +54,7 @@ rajoutez "[X]" si vous avez effectué une amélioration
 
 - 2 ou 3 modes de jeux , un 1v1 , 1vsIA et ChasseurVSChassé.
 - IA update et intelligente. 
-- Bonus aléatoires ( exemple de 2 tours d'affilés ).
+- [x] Bonus aléatoires ( exemple de 2 tours d'affilés ).
 - [x] Murs aléatoires et pas trop présent non plus.
 - Termios pour ne pas à avoir à appuyer sur entrer pour jouer.
 - [x] Pouvoir choisir la taille de la map ( matrice )
