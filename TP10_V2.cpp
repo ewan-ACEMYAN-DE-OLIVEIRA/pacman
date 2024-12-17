@@ -5,7 +5,7 @@
 //L'onglet règle quand on appuie sur 'n' est réparé
 
 //Problèmes :
-//les couts "rejouer" ne s'affichent pas a cause de clearscreen() de showMatrix(Mat) : il faut régler ça
+//les cout "rejouer" ne s'affichent pas a cause de clearscreen() de showMatrix(Mat) : il faut régler ça
 
 #include <iostream>
 #include <termios.h>
@@ -61,7 +61,7 @@ const char kEmpty        = '+';
 const char kWall         = '/';
 const char kBonus        = '*';
 
-void  showMatrix (const CMatrix & Mat){
+void  showMatrix (const CMatrix & Mat,bool & rejouer){
     clearScreen();
     for(auto i=0; i<Mat.size(); ++i){
         for(auto j=0; j<Mat[i].size(); ++j){
@@ -90,6 +90,9 @@ void  showMatrix (const CMatrix & Mat){
             }
         }
         cout << endl;
+    }
+    if(rejouer){
+        cout <<"BONUS : Veuillez rejouer !"<<endl ;
     }
 }
 unsigned randomRange (const unsigned& min, const unsigned& max) {
@@ -256,7 +259,7 @@ int ppal(){
     int joueur = 1;
     char mode_de_jeu;
     initMat(Mat, nbLine, nbColumn, posPlayer1, posPlayer2);
-    showMatrix(Mat);
+    showMatrix(Mat,rejouer);
     char move;
     cout << "Appuyez sur 'm' pour commencer le jeu ou 'n' pour lire les règles.\n";
     while (true) {
@@ -270,7 +273,7 @@ int ppal(){
             cout << endl << "Appuyer sur 'm' pour lancer le jeu" <<endl;
             move=entree(move);
             if (move == 'm'){
-                showMatrix(Mat);
+                showMatrix(Mat,rejouer);
                 break ;
             }
             else{
@@ -280,7 +283,7 @@ int ppal(){
 
     }
 
-    cout<<"Choisissez votre mode de jeu:"<<endl;
+    cout<< endl <<"Choisissez votre mode de jeu:"<<endl;
     cout<<"Appuyez sur 'j' pour commencer le mode 1v1, sur 'k' pour commencer le mode 1vIA ou sur 'l' pour le mode ChasseurVChassé\n";
     while(true){
         move=entree(move);
@@ -304,7 +307,7 @@ int ppal(){
 
     }
     if (mode_de_jeu=='j'){
-        showMatrix(Mat);
+        showMatrix(Mat,rejouer);
         couleur(KRouge);
         cout << "Coup numero " << nbCoup << endl;
         couleur(KReset);
@@ -319,11 +322,12 @@ int ppal(){
                     moveToken(Mat, move, posPlayer1,rejouer);
                     while (rejouer) {
                         cout << "Rejoue, joueur " << joueur << " : ";
-                        showMatrix(Mat);
+                        showMatrix(Mat,rejouer);
                         move = entree(move) ;
                         cout << endl;
                         moveToken(Mat, move, posPlayer1, rejouer);
                     }
+
                     joueur = 2;
                 }
                 else{
@@ -337,8 +341,8 @@ int ppal(){
                     moveToken(Mat, move, posPlayer2,rejouer);
                     while (rejouer) {
                         cout << "Rejoue, joueur " << joueur << " : ";
-                        showMatrix(Mat);
-                        move = entree(move) ;
+                        showMatrix(Mat,rejouer);
+                        move = entree(move);
                         cout << endl;
                         moveToken(Mat, move, posPlayer2, rejouer);
                     }
@@ -349,7 +353,7 @@ int ppal(){
                     continue ;
                 }
             }
-            showMatrix(Mat);
+            showMatrix(Mat,rejouer);
             if (nbCoup % 2 == 0) {
                 couleur(KBleu);
                 cout << "Coup numero " << nbCoup << endl;
