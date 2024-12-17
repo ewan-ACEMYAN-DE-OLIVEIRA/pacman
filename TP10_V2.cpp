@@ -255,8 +255,13 @@ int ppal(){
 
     }
 
+    couleur(KRouge);
+    cout << "Coup numero " << nbCoup << endl;
+    couleur(KReset);
+    ++nbCoup ;
+
+
     while (nbCoup < nbMax && !victoire) {
-        ;
 
         if (joueur == 1) {
             move = entree(move) ;
@@ -272,6 +277,7 @@ int ppal(){
                 joueur = 2;
             }
             else{
+                cout << "Touche invalide : rejouez";
                 continue ;
             }
         }
@@ -289,11 +295,12 @@ int ppal(){
                 joueur = 1;
             }
             else{
+                cout << "Touche invalide : rejouez";
                 continue ;
             }
         }
         showMatrix(Mat);
-        if (nbCoup % 2 == 1) {
+        if (nbCoup % 2 == 0) {
             couleur(KBleu);
             cout << "Coup numero " << nbCoup << endl;
             couleur(KReset);
@@ -310,7 +317,7 @@ int ppal(){
             ++nbCoup;
     }
     if (victoire){
-        if(nbCoup % 2 == 0 ){
+        if(nbCoup % 2 == 1 ){
             couleur(KBleu);
         }
         else{
