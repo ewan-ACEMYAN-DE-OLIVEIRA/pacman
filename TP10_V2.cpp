@@ -306,10 +306,18 @@ int ppal(){
             ++nbCoup;
     }
     if (victoire){
-        cout<<"Victoire Royale"<<endl;
+        if(nbCoup % 2 == 1 ){
+            couleur(KBleu);
+        }
+        else{
+            couleur(KRouge);
+        }
+        cout<<"Victoire Royale du joueur "<< joueur << " !"<<endl;
+        couleur(KReset);
+        cout << "Bien joué !" << endl ;
     }
     else{
-        cout<<"match nul!"<<endl;
+        cout<<"Match nul!"<<endl;
     }
     return 0;
 }
