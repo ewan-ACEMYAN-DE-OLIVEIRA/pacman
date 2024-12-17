@@ -58,7 +58,7 @@ rajoutez "[X]" si vous avez effectué une amélioration
 -[X] Murs aléatoires et pas trop présent non plus.
 - Termios pour ne pas à avoir à appuyer sur entrer pour jouer.
 -[X] Pouvoir choisir la taille de la map ( matrice )
--[X} Explication des règles au préalable.
+-[X] Explication des règles au préalable.
 - Interface graphique via Mingl.
 - Rajouter des sons avec Mingl.
 - Mode de jeu ChasseurVSChassé : alterner les tours tous les x tours selon le nombre de coups total possible.
