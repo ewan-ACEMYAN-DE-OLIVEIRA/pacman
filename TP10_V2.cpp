@@ -306,7 +306,7 @@ int ppal(){
             ++nbCoup;
     }
     if (victoire){
-        if(nbCoup % 2 == 1 ){
+        if(nbCoup % 2 == 0 ){
             couleur(KBleu);
         }
         else{
