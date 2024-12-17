@@ -387,6 +387,72 @@ int ppal(){
         }
         return 0;
     }
+    else if (mode_de_jeu=='l'){
+        showMatrix(Mat);
+        couleur(KRouge);
+        cout << "Coup numero " << nbCoup << endl;
+        couleur(KReset);
+        ++nbCoup;
+        int chasseur = 1;
+        while (nbCoup < nbMax && !victoire) {
+            if (joueur == 1) {
+                move = entree(move) ;
+                if(move == 'a' || move == 'z' || move == 'e' || move == 'd' || move == 'c' || move == 'x' || move == 'w' || move == 'q'){
+                    moveToken(Mat, move, posPlayer1,rejouer);
+                    while (rejouer) {
+                        showMatrix(Mat);
+                        cout << "Rejoue, joueur " << joueur << " : ";
+                        move = entree(move) ;
+                        cout << endl;
+                        moveToken(Mat, move, posPlayer1, rejouer);
+                    }
+                    joueur = 2;
+                }
+                else{
+                    cout << "Touche invalide : rejouez";
+                    continue ;
+                }
+            }
+            else {
+                move = entree(move) ;
+                if(move == 'a' || move == 'z' || move == 'e' || move == 'd' || move == 'c' || move == 'x' || move == 'w' || move == 'q'){
+                    moveToken(Mat, move, posPlayer2,rejouer);
+                    while (rejouer) {
+                        showMatrix(Mat);
+                        cout << "Rejoue, joueur " << joueur << " : ";
+                        move = entree(move) ;
+                        cout << endl;
+                        moveToken(Mat, move, posPlayer2, rejouer);
+                    }
+                    joueur = 1;
+                }
+                else{
+                    cout << "Touche invalide : rejouez";
+                    continue ;
+                }
+            }
+            showMatrix(Mat);
+            if (nbCoup % 2 == 0) {
+                couleur(KBleu);
+                cout << "Coup numero " << nbCoup << endl;
+                couleur(KReset);
+            }
+            else {
+                couleur(KRouge);
+                cout << "Coup numero " << nbCoup << endl;
+                couleur(KReset);
+            }
+            cout << "Coup du joueur " << joueur << " : ";
+            if (posPlayer1 == posPlayer2)
+                victoire = true;
+            else
+                ++nbCoup;
+        }
+        if (victoire)
+            cout<<"Le chasseur a gagné!"<<endl;
+        else
+            cout<<"Le chassé a gagné"<<endl;
+    }
 
 }
 
