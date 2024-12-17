@@ -281,6 +281,7 @@ int ppal(){
         if(move=='j'){
             mode_de_jeu='j';
             break;
+        }
         if(move='k'){
             mode_de_jeu='k';
             break;
