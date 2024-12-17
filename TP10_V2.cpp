@@ -254,7 +254,7 @@ int ppal(){
                     cout << "Rejoue, joueur " << joueur << " : ";
                     getline(cin, move);
                     cout << endl;
-                    moveToken(Mat, move[0], posPlayer1, rejouer);
+                    moveToken(Mat, move, posPlayer1, rejouer);
                 }
                 joueur = 2;
             }
@@ -272,7 +272,7 @@ int ppal(){
                     cout << "Rejoue, joueur " << joueur << " : ";
                     getline(cin, move);
                     cout << endl;
-                    moveToken(Mat, move[0], posPlayer2, rejouer);
+                    moveToken(Mat, move, posPlayer2, rejouer);
                 }
                 joueur = 1;
             }
