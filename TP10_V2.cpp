@@ -73,7 +73,7 @@ void  showMatrix (const CMatrix & Mat){
                 couleur(KReset);
             }
             else if (Mat[i][j] == kBonus) {
-                couleur(KMagenta);
+                couleur(KMAgenta);
                 cout << kBonus;
                 couleur(KReset);
             }
@@ -248,11 +248,11 @@ int ppal(){
         if (joueur == 1) {
             move = entree(move) ;
             if(move == 'a' || move == 'z' || move == 'e' || move == 'd' || move == 'c' || move == 'x' || move == 'w' || move == 'q'){
-                moveToken(Mat, move, posPlayer1);
+                moveToken(Mat, move, posPlayer1,rejouer);
                 while (rejouer) {
                     showMatrix(Mat);
                     cout << "Rejoue, joueur " << joueur << " : ";
-                    getline(cin, move);
+                    move = entree(move) ;
                     cout << endl;
                     moveToken(Mat, move, posPlayer1, rejouer);
                 }
@@ -263,14 +263,13 @@ int ppal(){
             }
         }
         else {
-
             move = entree(move) ;
             if(move == 'a' || move == 'z' || move == 'e' || move == 'd' || move == 'c' || move == 'x' || move == 'w' || move == 'q'){
-                moveToken(Mat, move, posPlayer2);
+                moveToken(Mat, move, posPlayer2,rejouer);
                 while (rejouer) {
                     showMatrix(Mat);
                     cout << "Rejoue, joueur " << joueur << " : ";
-                    getline(cin, move);
+                    move = entree(move) ;
                     cout << endl;
                     moveToken(Mat, move, posPlayer2, rejouer);
                 }
