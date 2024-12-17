@@ -1,14 +1,15 @@
-// Choses à faire :
-// Initialiser une touche pour quitter l'onglet règles, lore etc ...
-
 //Dernières modifications :
+//Murs et bonus opérationnels 
 //La couleur redevient blanche dans le terminal quoi qu'il arrive
 //On peut jouer tant qu'on a pas rentré une touche valide
+//L'onglet règle quand on appuie sur 'n' est réparé
+
 #include <iostream>
 #include <termios.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <vector>
+#include <csignal>
 
 using namespace std;
 
@@ -220,6 +221,14 @@ void showRules() {
          << "Chaque mouvement doit être planifié stratégiquement pour contourner les murs (représentant des obstacles ou des zones surveillées), et les téléportations (déplacements rapides entre les différents niveaux de la ville) doivent être utilisées judicieusement pour éviter les impasses et les pièges tendus par l'ennemi.\n";
 }
 
+void resetTerminal(int sig) {
+    // Cette fonction permet de réinitialiser l'état du terminal lorsqu'on appuie sur ctrl+c
+    // Elle permet surtout d'éviter de conserver la couleur bleu ou rouge lorsqu'on interrompt la partie
+    cout << "\033[0m" << endl ;  // Réinitialisation de toutes les propriétés (y compris couleur)
+    configureTerminal(true);
+    exit(0);  // Quitter proprement le programme
+}
+
 int ppal(){
     srand(time(NULL));
     CMatrix Mat;
@@ -230,6 +239,7 @@ int ppal(){
     cout << "Rentrez la hauteur de la carte (en colonne) : ";
     cin >> nbColumn;
     configureTerminal(false); // Désactiver le mode canonique
+    signal(SIGINT, resetTerminal);
     CPosition posPlayer1;
     CPosition posPlayer2;
     posPlayer1 = CPosition(0, 0);
@@ -251,10 +261,19 @@ int ppal(){
         }
         if (move == 'n') {
             showRules();
+            cout << endl << "Appuyer sur 'm' pour lancer le jeu" <<endl;
+            move=entree(move);
+            if (move == 'm'){
+                showMatrix(Mat);
+                break ;
+            }
+            else{
+                continue ;
+            }
         }
 
     }
-
+    showMatrix(Mat);
     couleur(KRouge);
     cout << "Coup numero " << nbCoup << endl;
     couleur(KReset);
