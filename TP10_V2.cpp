@@ -334,7 +334,6 @@ int ppal(){
                     joueur = 2;
                 }
                 else{
-                    cout << "Touche invalide : rejouez";
                     continue ;
                 }
             }
@@ -352,7 +351,6 @@ int ppal(){
                     joueur = 1;
                 }
                 else{
-                    cout << "Touche invalide : rejouez";
                     continue ;
                 }
             }
@@ -372,10 +370,7 @@ int ppal(){
                 victoire = true;
             else
                 ++nbCoup;
-            if(nbCoup%10==0){
-                chasseur=(nbCoup/10)%2;
-                cout<<"Le chasseur est le joueur: "<<chasseur+1<<endl;
-            }
+
         }
         if (victoire){
             if(nbCoup % 2 == 1 ){
@@ -415,7 +410,6 @@ int ppal(){
                     joueur = 2;
                 }
                 else{
-                    cout << "Touche invalide : rejouez";
                     continue ;
                 }
             }
@@ -433,7 +427,6 @@ int ppal(){
                     joueur = 1;
                 }
                 else{
-                    cout << "Touche invalide : rejouez";
                     continue ;
                 }
             }
