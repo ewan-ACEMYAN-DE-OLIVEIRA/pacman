@@ -62,6 +62,7 @@ rajoutez "[X]" si vous avez effectué une amélioration
 - Interface graphique via Mingl.
 - Rajouter des sons avec Mingl.
 - Mode de jeu ChasseurVSChassé : alterner les tours tous les x tours selon le nombre de coups total possible.
+- Render Distance pour le mode IA
 
 
     
