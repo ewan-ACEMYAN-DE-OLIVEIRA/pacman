@@ -102,6 +102,15 @@ void initMat (CMatrix & Mat, unsigned nbLine, unsigned nbColumn, CPosition & pos
             }
         }
     }
+    unsigned borneMinRandom = 1;
+    unsigned borneMaxRandom = 10;
+    for (unsigned i = 0; i < nbLine; ++i) {
+        for (unsigned j = 0; j < nbColumn; ++j) {
+            if (randomRange(borneMinRandom, borneMaxRandom) == randomRange(borneMinRandom, borneMaxRandom)) {
+                Mat[i][j] = kBonus;
+            }
+        }
+    }
     // Placer les joueurs
     Mat[posPlayer1.first][posPlayer1.second] = kTokenPlayer1;
     Mat[posPlayer2.first][posPlayer2.second] = kTokenPlayer2;
