@@ -3,6 +3,7 @@
 //La couleur redevient blanche dans le terminal quoi qu'il arrive
 //On peut jouer tant qu'on a pas rentré une touche valide
 //L'onglet règle quand on appuie sur 'n' est réparé
+//Changement de showMatrix() : le booléen "rejouer" est ajouté dans le corps et un if(rejouer){ a été ajouté
 
 //Problèmes :
 //les cout "rejouer" ne s'affichent pas a cause de clearscreen() de showMatrix(Mat) : il faut régler ça
