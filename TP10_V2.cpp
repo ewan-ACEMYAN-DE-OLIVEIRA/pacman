@@ -108,7 +108,7 @@ void initMat (CMatrix & Mat, unsigned nbLine, unsigned nbColumn, CPosition & pos
 }
 
 
-void moveToken(CMatrix &Mat, char move, CPosition &pos) {
+void moveToken(CMatrix &Mat, char move, CPosition &pos, bool &rejouer) {
     char element = Mat[pos.first][pos.second];
     Mat[pos.first][pos.second] = kEmpty;
     switch(tolower(move)) {
