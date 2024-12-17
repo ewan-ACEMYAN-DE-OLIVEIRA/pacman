@@ -249,6 +249,7 @@ int ppal(){
     bool victoire = false;
     bool rejouer = false;
     int joueur = 1;
+    char mode_de_jeu;
     initMat(Mat, nbLine, nbColumn, posPlayer1, posPlayer2);
     showMatrix(Mat);
     char move;
@@ -273,83 +274,101 @@ int ppal(){
         }
 
     }
-    showMatrix(Mat);
-    couleur(KRouge);
-    cout << "Coup numero " << nbCoup << endl;
-    couleur(KReset);
-    ++nbCoup ;
-
-
-    while (nbCoup < nbMax && !victoire) {
-
-        if (joueur == 1) {
-            move = entree(move) ;
-            if(move == 'a' || move == 'z' || move == 'e' || move == 'd' || move == 'c' || move == 'x' || move == 'w' || move == 'q'){
-                moveToken(Mat, move, posPlayer1,rejouer);
-                while (rejouer) {
-                    showMatrix(Mat);
-                    cout << "Rejoue, joueur " << joueur << " : ";
-                    move = entree(move) ;
-                    cout << endl;
-                    moveToken(Mat, move, posPlayer1, rejouer);
-                }
-                joueur = 2;
-            }
-            else{
-                cout << "Touche invalide : rejouez";
-                continue ;
-            }
+    cout<<"Choisissez votre mode de jeu:"<<endl;
+    cout<<"Appuyez sur 'a' pour commencer le mode 1v1, sur 'b' pour commencer le mode 1vIA ou sur 'c' pour le mode ChasseurVChassé\n";
+    while(true){
+        move=entree(move);
+        if(move=="j"){
+            mode_de_jeu='j';
+            break;
+        if(move="k"){
+            mode_de_jeu="k";
+            break;
         }
-        else {
-            move = entree(move) ;
-            if(move == 'a' || move == 'z' || move == 'e' || move == 'd' || move == 'c' || move == 'x' || move == 'w' || move == 'q'){
-                moveToken(Mat, move, posPlayer2,rejouer);
-                while (rejouer) {
-                    showMatrix(Mat);
-                    cout << "Rejoue, joueur " << joueur << " : ";
-                    move = entree(move) ;
-                    cout << endl;
-                    moveToken(Mat, move, posPlayer2, rejouer);
-                }
-                joueur = 1;
-            }
-            else{
-                cout << "Touche invalide : rejouez";
-                continue ;
-            }
+        if(move="l"){
+            mode_de_jeu="l";
+            break;
         }
-        showMatrix(Mat);
-        if (nbCoup % 2 == 0) {
-            couleur(KBleu);
-            cout << "Coup numero " << nbCoup << endl;
-            couleur(KReset);
-        }
-        else {
-            couleur(KRouge);
-            cout << "Coup numero " << nbCoup << endl;
-            couleur(KReset);
-        }
-        cout << "Coup du joueur " << joueur << " : ";
-        if (posPlayer1 == posPlayer2)
-            victoire = true;
-        else
-            ++nbCoup;
     }
-    if (victoire){
-        if(nbCoup % 2 == 1 ){
-            couleur(KBleu);
+    if (mode_de_jeu="j"){
+        showMatrix(Mat);
+        couleur(KRouge);
+        cout << "Coup numero " << nbCoup << endl;
+        couleur(KReset);
+        ++nbCoup ;
+    
+    
+        while (nbCoup < nbMax && !victoire) {
+    
+            if (joueur == 1) {
+                move = entree(move) ;
+                if(move == 'a' || move == 'z' || move == 'e' || move == 'd' || move == 'c' || move == 'x' || move == 'w' || move == 'q'){
+                    moveToken(Mat, move, posPlayer1,rejouer);
+                    while (rejouer) {
+                        showMatrix(Mat);
+                        cout << "Rejoue, joueur " << joueur << " : ";
+                        move = entree(move) ;
+                        cout << endl;
+                        moveToken(Mat, move, posPlayer1, rejouer);
+                    }
+                    joueur = 2;
+                }
+                else{
+                    cout << "Touche invalide : rejouez";
+                    continue ;
+                }
+            }
+            else {
+                move = entree(move) ;
+                if(move == 'a' || move == 'z' || move == 'e' || move == 'd' || move == 'c' || move == 'x' || move == 'w' || move == 'q'){
+                    moveToken(Mat, move, posPlayer2,rejouer);
+                    while (rejouer) {
+                        showMatrix(Mat);
+                        cout << "Rejoue, joueur " << joueur << " : ";
+                        move = entree(move) ;
+                        cout << endl;
+                        moveToken(Mat, move, posPlayer2, rejouer);
+                    }
+                    joueur = 1;
+                }
+                else{
+                    cout << "Touche invalide : rejouez";
+                    continue ;
+                }
+            }
+            showMatrix(Mat);
+            if (nbCoup % 2 == 0) {
+                couleur(KBleu);
+                cout << "Coup numero " << nbCoup << endl;
+                couleur(KReset);
+            }
+            else {
+                couleur(KRouge);
+                cout << "Coup numero " << nbCoup << endl;
+                couleur(KReset);
+            }
+            cout << "Coup du joueur " << joueur << " : ";
+            if (posPlayer1 == posPlayer2)
+                victoire = true;
+            else
+                ++nbCoup;
+        }
+        if (victoire){
+            if(nbCoup % 2 == 1 ){
+                couleur(KBleu);
+            }
+            else{
+                couleur(KRouge);
+            }
+            cout<<"Victoire Royale du joueur "<< joueur << " !"<<endl;
+            couleur(KReset);
+            cout << "Bien joué !" << endl ;
         }
         else{
-            couleur(KRouge);
+            cout<<"Match nul!"<<endl;
         }
-        cout<<"Victoire Royale du joueur "<< joueur << " !"<<endl;
-        couleur(KReset);
-        cout << "Bien joué !" << endl ;
+        return 0;
     }
-    else{
-        cout<<"Match nul!"<<endl;
-    }
-    return 0;
 }
 
 int main() {
