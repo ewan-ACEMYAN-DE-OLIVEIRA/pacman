@@ -289,7 +289,7 @@ int ppal(){
             }
         }
         showMatrix(Mat);
-        if (nbCoup % 2 == 1) {
+        if (joueur==1) {
             couleur(KBleu);
             cout << "Coup numero " << nbCoup << endl;
             couleur(KReset);
