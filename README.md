@@ -3,7 +3,7 @@
 
 <h2>Votre tâche est de compléter le code fourni lors des TP en suivant ces étapes :</h2>
 
-    Blinder le code fourni lors des TPs (prog 10, prog 13, prog 14) :
+    Blinder le code fourni lors des TPs (prog 10, prog 13) :
         Assurez-vous qu'il n'y ait pas de fautes :
             Par exemple, il doit être impossible de jouer à la place du deuxième joueur.
             Évitez les débordements d’indices, sauf cas particuliers mentionnés dans les règles.
