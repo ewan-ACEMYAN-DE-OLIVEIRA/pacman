@@ -56,7 +56,7 @@ rajoutez "[X]" si vous avez effectué une amélioration
 - IA update et intelligente. 
 - [x] Bonus aléatoires ( exemple de 2 tours d'affilés ).
 - [x] Murs aléatoires et pas trop présent non plus.
-- Termios pour ne pas à avoir à appuyer sur entrer pour jouer.
+- [X]Termios pour ne pas à avoir à appuyer sur entrer pour jouer.
 - [x] Pouvoir choisir la taille de la map ( matrice )
 - [x] Explication des règles au préalable.
 - Interface graphique via Mingl.
