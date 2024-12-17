@@ -275,7 +275,7 @@ int ppal(){
 
     }
     cout<<"Choisissez votre mode de jeu:"<<endl;
-    cout<<"Appuyez sur 'a' pour commencer le mode 1v1, sur 'b' pour commencer le mode 1vIA ou sur 'c' pour le mode ChasseurVChassé\n";
+    cout<<"Appuyez sur 'j' pour commencer le mode 1v1, sur 'k' pour commencer le mode 1vIA ou sur 'l' pour le mode ChasseurVChassé\n";
     while(true){
         move=entree(move);
         if(move=='j'){
