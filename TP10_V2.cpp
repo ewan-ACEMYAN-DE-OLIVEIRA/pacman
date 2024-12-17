@@ -102,8 +102,8 @@ void initMat (CMatrix & Mat, unsigned nbLine, unsigned nbColumn, CPosition & pos
             }
         }
     }
-    unsigned borneMinRandom = 1;
-    unsigned borneMaxRandom = 10;
+    borneMinRandom = 1;
+    borneMaxRandom = 10;
     for (unsigned i = 0; i < nbLine; ++i) {
         for (unsigned j = 0; j < nbColumn; ++j) {
             if (randomRange(borneMinRandom, borneMaxRandom) == randomRange(borneMinRandom, borneMaxRandom)) {
