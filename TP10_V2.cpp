@@ -1,8 +1,11 @@
 //Dernières modifications :
-//Murs et bonus opérationnels 
+//Murs et bonus opérationnels
 //La couleur redevient blanche dans le terminal quoi qu'il arrive
 //On peut jouer tant qu'on a pas rentré une touche valide
 //L'onglet règle quand on appuie sur 'n' est réparé
+
+//Problèmes :
+//les couts "rejouer" ne s'affichent pas a cause de clearscreen() de showMatrix(Mat) : il faut régler ça
 
 #include <iostream>
 #include <termios.h>
@@ -229,6 +232,8 @@ void resetTerminal(int sig) {
     exit(0);  // Quitter proprement le programme
 }
 
+
+
 int ppal(){
     srand(time(NULL));
     CMatrix Mat;
@@ -274,40 +279,47 @@ int ppal(){
         }
 
     }
+
     cout<<"Choisissez votre mode de jeu:"<<endl;
     cout<<"Appuyez sur 'j' pour commencer le mode 1v1, sur 'k' pour commencer le mode 1vIA ou sur 'l' pour le mode ChasseurVChassé\n";
     while(true){
         move=entree(move);
-        if(move=='j'){
-            mode_de_jeu='j';
-            break;
+        if(move=='j' || move=='k' || move=='l'){
+            if(move=='j'){
+                mode_de_jeu='j';
+                break;
+            }
+            if(move='k'){
+                mode_de_jeu='k';
+                break;
+            }
+            if(move='l'){
+                mode_de_jeu='l';
+                break;
+            }
         }
-        if(move='k'){
-            mode_de_jeu='k';
-            break;
+        else{
+            continue;
         }
-        if(move='l'){
-            mode_de_jeu='l';
-            break;
-        }
+
     }
-    if (mode_de_jeu='j'){
+    if (mode_de_jeu=='j'){
         showMatrix(Mat);
         couleur(KRouge);
         cout << "Coup numero " << nbCoup << endl;
         couleur(KReset);
         ++nbCoup ;
-    
-    
+
+
         while (nbCoup < nbMax && !victoire) {
-    
+
             if (joueur == 1) {
                 move = entree(move) ;
                 if(move == 'a' || move == 'z' || move == 'e' || move == 'd' || move == 'c' || move == 'x' || move == 'w' || move == 'q'){
                     moveToken(Mat, move, posPlayer1,rejouer);
                     while (rejouer) {
-                        showMatrix(Mat);
                         cout << "Rejoue, joueur " << joueur << " : ";
+                        showMatrix(Mat);
                         move = entree(move) ;
                         cout << endl;
                         moveToken(Mat, move, posPlayer1, rejouer);
@@ -324,8 +336,8 @@ int ppal(){
                 if(move == 'a' || move == 'z' || move == 'e' || move == 'd' || move == 'c' || move == 'x' || move == 'w' || move == 'q'){
                     moveToken(Mat, move, posPlayer2,rejouer);
                     while (rejouer) {
-                        showMatrix(Mat);
                         cout << "Rejoue, joueur " << joueur << " : ";
+                        showMatrix(Mat);
                         move = entree(move) ;
                         cout << endl;
                         moveToken(Mat, move, posPlayer2, rejouer);
@@ -370,6 +382,7 @@ int ppal(){
         }
         return 0;
     }
+
 }
 
 int main() {
