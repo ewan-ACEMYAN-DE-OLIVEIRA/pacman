@@ -55,10 +55,10 @@ rajoutez "[X]" si vous avez effectué une amélioration
 - 2 ou 3 modes de jeux , un 1v1 , 1vsIA et ChasseurVSChassé.
 - IA update et intelligente. 
 - Bonus aléatoires ( exemple de 2 tours d'affilés ).
-"[X]" Murs aléatoires et pas trop présent non plus.
+-[x] Murs aléatoires et pas trop présent non plus.
 - Termios pour ne pas à avoir à appuyer sur entrer pour jouer.
-[X] Pouvoir choisir la taille de la map ( matrice )
-[X] Explication des règles au préalable.
+-[x] Pouvoir choisir la taille de la map ( matrice )
+-[x] Explication des règles au préalable.
 - Interface graphique via Mingl.
 - Rajouter des sons avec Mingl.
 - Mode de jeu ChasseurVSChassé : alterner les tours tous les x tours selon le nombre de coups total possible.
