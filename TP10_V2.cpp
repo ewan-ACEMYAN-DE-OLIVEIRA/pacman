@@ -5,7 +5,8 @@
 //L'onglet règle quand on appuie sur 'n' est réparé
 //Changement de showMatrix() : le booléen "rejouer" est ajouté dans le corps et un if(rejouer){ a été ajouté
 //Choix du mode de jeu (beta)
-
+//Problèmes :
+//les cout "rejouer" ne s'affichent pas a cause de clearscreen() de showMatrix(Mat) : il faut régler ça
 
 #include <iostream>
 #include <termios.h>
@@ -265,14 +266,14 @@ int ppal(){
     while (true) {
         move = entree(move);
 
-        if (move == 'm') {
+        if (tolower(move) == 'm') {
             break; // Commencer le jeu
         }
-        if (move == 'n') {
+        if (tolower(move) == 'n') {
             showRules();
             cout << endl << "Appuyer sur 'm' pour lancer le jeu" <<endl;
             move=entree(move);
-            if (move == 'm'){
+            if (tolower(move) == 'm'){
                 showMatrix(Mat,rejouer);
                 break ;
             }
