@@ -1,5 +1,9 @@
 // Choses à faire :
 // Initialiser une touche pour quitter l'onglet règles, lore etc ...
+
+//Dernières modifications :
+//La couleur redevient blanche dans le terminal quoi qu'il arrive
+//On peut jouer tant qu'on a pas rentré une touche valide
 #include <iostream>
 #include <termios.h>
 #include <unistd.h>
