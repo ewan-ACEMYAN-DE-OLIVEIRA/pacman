@@ -5,6 +5,8 @@
 //L'onglet règle quand on appuie sur 'n' est réparé
 //Changement de showMatrix() : le booléen "rejouer" est ajouté dans le corps et un if(rejouer){ a été ajouté
 //Choix du mode de jeu (beta)
+//Les touches Maj fonctionnent aussi
+
 //Problèmes :
 //les cout "rejouer" ne s'affichent pas a cause de clearscreen() de showMatrix(Mat) : il faut régler ça
 
