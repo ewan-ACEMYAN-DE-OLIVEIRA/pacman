@@ -293,12 +293,12 @@ int ppal(){
                 mode_de_jeu='j';
                 break;
             }
-            if(move='k'){
-                mode_de_jeu='k';
+            if(move=='k'){
+                mode_de_jeu=='k';
                 break;
             }
-            if(move='l'){
-                mode_de_jeu='l';
+            if(move=='l'){
+                mode_de_jeu=='l';
                 break;
             }
         }
