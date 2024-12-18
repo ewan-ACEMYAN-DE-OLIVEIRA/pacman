@@ -1,17 +1,24 @@
-Documentation MinGL 2
+ChatGPT
 
-MinGL 2 est une bibliothèque C++ développée à des fins pédagogiques. Elle est une évolution de MinGL, initialement créée par Alain Casali, enseignant-chercheur au département informatique de l'IUT d'Aix-en-Provence. Cette bibliothèque simplifie l'affichage de formes primitives et composées, le rendu de texte, la gestion d'animations, la lecture de fichiers audio, ainsi que les saisies clavier et souris.
-Installation
-Dépendances requises
+D'accord, voici ton texte avec les balises Markdown pour ajouter les titres, mettre du texte en gras, italique, et structurer correctement le tout pour une lecture agréable sur GitHub.
+
+# **Documentation MinGL 2**
+
+MinGL 2 est une bibliothèque C++ développée à des fins pédagogiques. Elle est une évolution de MinGL, initialement créée par **Alain Casali**, enseignant-chercheur au département informatique de l'IUT d'Aix-en-Provence. Cette bibliothèque simplifie l'affichage de formes primitives et composées, le rendu de texte, la gestion d'animations, la lecture de fichiers audio, ainsi que les saisies clavier et souris.
+
+## **Installation**
+
+### **Dépendances requises**
 
 MinGL 2 nécessite les bibliothèques suivantes :
 
-    freeglut
-    sfml (pour l'audio)
+- `freeglut`
+- `sfml` (pour l'audio)
 
-Installation par système d'exploitation
-Sous Debian et dérivés :
+### **Installation par système d'exploitation**
 
+#### **Sous Debian et dérivés :**
+```bash
 sudo apt-get install freeglut3-dev libsfml-dev
 
 Sous Arch Linux et Manjaro :
@@ -40,9 +47,9 @@ Pour intégrer MinGL 2 dans un projet utilisant QMake :
     Décompressez la bibliothèque ou ajoutez-la comme sous-module Git dans un sous-répertoire de votre projet.
     Ajoutez dans le fichier .pro la directive suivante :
 
-    include(.../mingl.pri)
+include(.../mingl.pri)
 
-    Remplacez ... par le chemin vers le répertoire de MinGL 2.
+Remplacez ... par le chemin vers le répertoire de MinGL 2.
 
 Exemple : Si la bibliothèque est placée dans un dossier minGL2/ dans le même répertoire que votre fichier .pro, ajoutez :
 
@@ -78,37 +85,14 @@ Fichiers à exclure
 C++ template
 Prérequis
 
-*.d
-Fichiers objets compilés
+    *.d - Fichiers objets compilés
+    *.slo, *.lo, *.o, *.obj
+    En-têtes précompilés : *.gch, *.pch
+    Bibliothèques dynamiques compilées : *.so, *.dylib, *.dll
+    Fichiers modules Fortran : *.mod, *.smod
+    Bibliothèques statiques compilées : *.lai, *.la, *.a, *.lib
+    Exécutables : *.exe, *.out, *.app
 
-*.slo
-*.lo
-*.o
-*.obj
-En-têtes précompilés
-
-*.gch
-*.pch
-Bibliothèques dynamiques compilées
-
-*.so
-*.dylib
-*.dll
-Fichiers modules Fortran
-
-*.mod
-*.smod
-Bibliothèques statiques compilées
-
-*.lai
-*.la
-*.a
-*.lib
-Exécutables
-
-*.exe
-*.out
-*.app
 Configurations spécifiques
 
     Idea
@@ -181,15 +165,11 @@ HEADERS += \
     $$PWD/include/mingl/transition/transition_types.h
 
 CONFIG -= qt
-
 TEMPLATE = lib
 CONFIG += staticlib
-
 CONFIG += c++11
-
 QMAKE_CFLAGS += -Wall
 QMAKE_CXXFLAGS += -Wall
-
 DEFINES += QT_DEPRECATED_WARNINGS
 
 # Uncomment to disable deprecated APIs:
@@ -201,3 +181,11 @@ unix {
     target.path = $$[QT_INSTALL_PLUGINS]/generic
 }
 !isEmpty(target.path): INSTALLS += target
+
+Points importants :
+
+    Titres : Utilisation de # pour les titres principaux, ## pour les sous-titres.
+    Gras : Utilisation de ** pour mettre du texte en gras.
+    Code : Utilisation des blocs de code avec trois backticks (```) pour les commandes ou extraits de code.
+    Listes : Utilisation de - pour les éléments de liste.
+    Citation : Utilisation de > pour les citations ou notes importantes.
