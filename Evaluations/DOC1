@@ -1,1 +1,203 @@
+Documentation MinGL 2
 
+MinGL 2 est une bibliothèque C++ développée à des fins pédagogiques. Elle est une évolution de MinGL, initialement créée par Alain Casali, enseignant-chercheur au département informatique de l'IUT d'Aix-en-Provence. Cette bibliothèque simplifie l'affichage de formes primitives et composées, le rendu de texte, la gestion d'animations, la lecture de fichiers audio, ainsi que les saisies clavier et souris.
+Installation
+Dépendances requises
+
+MinGL 2 nécessite les bibliothèques suivantes :
+
+    freeglut
+    sfml (pour l'audio)
+
+Installation par système d'exploitation
+Sous Debian et dérivés :
+
+sudo apt-get install freeglut3-dev libsfml-dev
+
+Sous Arch Linux et Manjaro :
+
+sudo pacman -S freeglut sfml
+
+Sous macOS (via Homebrew) :
+
+brew cask install xquartz
+brew install freeglut sfml
+
+    Important : Pour finaliser l'installation de XQuartz, redémarrez votre système macOS.
+
+Compatibilité testée
+
+    Debian 10
+    Ubuntu 20.04
+    macOS 10.15
+    Manjaro GNU/Linux (audio non testé)
+
+Utilisation
+Avec un projet QMake
+
+Pour intégrer MinGL 2 dans un projet utilisant QMake :
+
+    Décompressez la bibliothèque ou ajoutez-la comme sous-module Git dans un sous-répertoire de votre projet.
+    Ajoutez dans le fichier .pro la directive suivante :
+
+    include(.../mingl.pri)
+
+    Remplacez ... par le chemin vers le répertoire de MinGL 2.
+
+Exemple : Si la bibliothèque est placée dans un dossier minGL2/ dans le même répertoire que votre fichier .pro, ajoutez :
+
+include(minGL2/mingl.pri)
+
+Compilation en tant que bibliothèque
+
+MinGL 2 peut être compilé pour générer un fichier statique libmingl.a :
+
+    Ouvrez le fichier projet mingl.pro.
+    Lancez la compilation.
+    Le fichier compilé libmingl.a sera disponible dans le répertoire de compilation.
+
+Le répertoire include/ contient tous les fichiers d'en-tête nécessaires.
+Documentation et outils
+Génération de documentation HTML
+
+Si Doxygen est installé, vous pouvez générer une documentation HTML en exécutant la commande suivante dans le répertoire de la bibliothèque :
+
+doxygen Doxyfile
+
+La documentation sera créée dans le dossier doc/.
+Outils supplémentaires
+
+Le répertoire tools/ contient divers outils utiles à l'utilisation de MinGL 2.
+Remerciements
+
+    Alexandre Sollier et Clément Mathieu-Drif : Développeurs principaux de MinGL 2
+    Alain Casali : Auteur de la version originale de MinGL
+    Promo 2020-2021 : Étudiants de 2ème année du département informatique de l'IUT d'Aix-en-Provence
+
+Fichiers à exclure
+C++ template
+Prérequis
+
+*.d
+Fichiers objets compilés
+
+*.slo
+*.lo
+*.o
+*.obj
+En-têtes précompilés
+
+*.gch
+*.pch
+Bibliothèques dynamiques compilées
+
+*.so
+*.dylib
+*.dll
+Fichiers modules Fortran
+
+*.mod
+*.smod
+Bibliothèques statiques compilées
+
+*.lai
+*.la
+*.a
+*.lib
+Exécutables
+
+*.exe
+*.out
+*.app
+Configurations spécifiques
+
+    Idea
+        .idea
+    macOS
+        .DS_Store
+    Doc
+        doc/
+    Qt Creator
+        FreeGlutCppV4.pro.user*
+        .pro.user
+        *.autosave
+        build-*
+
+Configuration QMake spécifique
+
+macos:LIBS += -L"/usr/local/opt/freeglut/lib" -L"/usr/local/opt/sfml/lib" -framework OpenGL
+LIBS += -lglut -lsfml-audio
+!macos:LIBS += -lGLU -lGL
+
+INCLUDEPATH += $$PWD/include/
+macos:INCLUDEPATH += /usr/local/opt/freeglut/include /usr/local/opt/sfml/include
+
+SOURCES += \
+    $$PWD/src/audio/audioengine.cpp \
+    $$PWD/src/exception/cexception.cpp \
+    $$PWD/src/mingl.cpp \
+    $$PWD/src/event/event_manager.cpp \
+    $$PWD/src/shape/circle.cpp \
+    $$PWD/src/shape/line.cpp \
+    $$PWD/src/shape/rectangle.cpp \
+    $$PWD/src/shape/triangle.cpp \
+    $$PWD/src/shape/shape.cpp \
+    $$PWD/src/graphics/rgbacolor.cpp \
+    $$PWD/src/graphics/vec2d.cpp \
+    $$PWD/src/gui/glut_font.cpp \
+    $$PWD/src/gui/sprite.cpp \
+    $$PWD/src/gui/text.cpp \
+    $$PWD/src/transition/transition.cpp \
+    $$PWD/src/transition/transition_contract.cpp \
+    $$PWD/src/transition/transition_engine.cpp
+
+HEADERS += \
+    $$PWD/include/mingl/audio/audioengine.h \
+    $$PWD/include/mingl/exception/cexception.h \
+    $$PWD/include/mingl/exception/cexception.hpp \
+    $$PWD/include/mingl/exception/errcode.h \
+    $$PWD/include/mingl/macros.h \
+    $$PWD/include/mingl/mingl.h \
+    $$PWD/include/mingl/event/event.hpp \
+    $$PWD/include/mingl/event/event_manager.h \
+    $$PWD/include/mingl/shape/circle.h \
+    $$PWD/include/mingl/shape/line.h \
+    $$PWD/include/mingl/shape/rectangle.h \
+    $$PWD/include/mingl/shape/triangle.h \
+    $$PWD/include/mingl/shape/shape.h \
+    $$PWD/include/mingl/graphics/idrawable.h \
+    $$PWD/include/mingl/graphics/rgbacolor.h \
+    $$PWD/include/mingl/graphics/vec2d.h \
+    $$PWD/include/mingl/gui/glut_font.h \
+    $$PWD/include/mingl/gui/sprite.h \
+    $$PWD/include/mingl/gui/text.h \
+    $$PWD/include/mingl/tools/ieditable.h \
+    $$PWD/include/mingl/tools/ieditable.hpp \
+    $$PWD/include/mingl/tools/ifonctorunaire.hpp \
+    $$PWD/include/mingl/transition/itransitionable.h \
+    $$PWD/include/mingl/transition/transition.h \
+    $$PWD/include/mingl/transition/transition_contract.h \
+    $$PWD/include/mingl/transition/transition_engine.h \
+    $$PWD/include/mingl/transition/transition_types.h
+
+CONFIG -= qt
+
+TEMPLATE = lib
+CONFIG += staticlib
+
+CONFIG += c++11
+
+QMAKE_CFLAGS += -Wall
+QMAKE_CXXFLAGS += -Wall
+
+DEFINES += QT_DEPRECATED_WARNINGS
+
+# Uncomment to disable deprecated APIs:
+#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000
+
+include(mingl.pri)
+
+unix {
+    target.path = $$[QT_INSTALL_PLUGINS]/generic
+}
+!isEmpty(target.path): INSTALLS += target
