@@ -1,0 +1,68 @@
+Script de conversion .si2
+
+Ce répertoire contient un script Python permettant de convertir des images au format .si2 utilisé par MinGL 2, ainsi que de convertir n'importe quelle image en format .si2. Le format .si2 est un format d'image non-compressé, de type bitmap, avec support de la transparence. Ce format est principalement utilisé dans les applications créées avec MinGL 2.
+
+Le script Python s'appelle img2si.py et permet de faire les conversions suivantes :
+
+    Image vers .si2 : Transforme une image au format compatible avec Pillow (par exemple .png, .jpg) en .si2.
+    .si2 vers image : Convertit une image .si2 en un autre format d'image compatible avec les logiciels de traitement d'image (par exemple .png).
+
+Installation des dépendances
+
+Le script dépend de la bibliothèque Python Pillow pour manipuler les images. Vous pouvez l'installer en utilisant pip :
+
+python3 -m pip install --upgrade pip
+python3 -m pip install --upgrade Pillow
+
+Fonctionnalité du script
+
+Le script contient deux fonctions principales :
+Fonction convert_from_si2
+
+Cette fonction convertit une image .si2 en un format d'image compatible avec Pillow (par exemple .png).
+
+    Entrées :
+        source : Le fichier .si2 à convertir.
+        output : Le fichier de sortie avec extension appropriée (par exemple .png).
+
+Fonction convert_to_si2
+
+Cette fonction convertit une image au format compatible Pillow (par exemple .png) en une image .si2.
+
+    Entrées :
+        source : Le fichier source à convertir (par exemple .png).
+        output : Le fichier de sortie au format .si2.
+
+Détails du format .si2
+
+Le format .si2 est une représentation binaire d'une image bitmap avec une structure d'en-tête spécifique, comme suit :
+Adresse	Longueur	Description
+0x00	2	Nombre magique ("SI")
+0x02	4	Nombre magique de l'en-tête ("HEAD")
+0x06	2	Version du fichier
+0x08	4	Nombre de pixels
+0x0C	4	Largeur de l'image
+0x10	4	Nombre magique de données ("DATA")
+0x14	???	Données non compressées de l'image en RGBA8888
+
+Les champs "Version du fichier", "Nombre de pixels" et "Largeur de l'image" sont des entiers non signés en little-endian.
+Exécution du script
+
+Une fois que vous avez installé les dépendances nécessaires, vous pouvez exécuter le script en ligne de commande avec la syntaxe suivante :
+
+python3 img2si.py <source file> <output file>
+
+Si le fichier source est au format .si2, le script effectuera la conversion vers un autre format d'image. Si le fichier source est dans un autre format, il sera converti en .si2.
+Exemple d'utilisation
+
+Pour convertir une image .png en .si2 :
+
+python3 img2si.py image.png image.si2
+
+Pour convertir une image .si2 en .png :
+
+python3 img2si.py image.si2 image.png
+
+Licence
+
+Ce script est sous licence MIT. Vous pouvez l'utiliser et le modifier selon vos besoins, tant que vous respectez les termes de la licence.
