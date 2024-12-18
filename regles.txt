@@ -34,7 +34,7 @@ Des murs apparaissent aléatoirement sur la carte pour empêcher les joueurs de 
 
 Des bonus apparaissent aléatoirement sur la carte et permettent aux joueurs qui en ramassent de jouer un tour supplémentaire. (* rose)
 
-Lorsque les joueurs sortent de la carte, ils sont téléportés de l'autre côté si possible. Sinon, ils restent sur place et le tour est c'est au tour de son adversaire de jouer.
+Lorsque les joueurs sortent de la carte, ils sont téléportés de l'autre côté si possible. Sinon, ils restent sur place et c'est à son adversaire de jouer.
 
 La partie est déclarée match nul lorsque les joueurs ont joué trop de coups s'en sêtre attrapés. Le nombre de coups maximum est définie selon la taille de la carte. 
 
