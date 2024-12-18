@@ -1,0 +1,65 @@
+--- TOUCHES :
+
+Appuyer sur z : se déplacer vers le haut
+Appuyer sur q : se déplacer vers la gauche
+Appuyer sur x : se déplacer vers le bas
+Appuyer sur d : se déplacer vers la droite
+Appuyer sur a : se déplacer en haut à gauche
+Appuyer sur w : se déplacer en bas à gauche
+Appuyer sur c : se déplacer en bas à droite
+Appuyer sur e : se déplacer en haut à droite
+Appuyer sur ctrl+c : quitter le jeu avant la fin de la partie
+
+
+--- MODES DE JEU :
+
+- Joueur VS Joueur
+
+Deux joueurs sont placés dans les coins opposés de la carte de taille prédéfinie manuellement. Grâce aux 8 possibilités de déplacements possibles, les joueurs doivent se déplacer sur la carte pour éliminer l'adversaire. Le joueur éliminé est le premier à se faire attraper.
+
+- Chasseur VS Chassé
+
+Deux joueurs sont placés dans les coins opposés de la carte de taille prédéfinie manuellement. Un des joueurs est le chasseur et l'autre le chassé. Grâce aux 8 possibilités de déplacements possibles, le chassé doit à tout pris échapper au chasseur. Tous les 4 déplacements par joueur, les rôles de chasseur et chassé sont échangés. La chasseur l'emporte s'il attrape le chassé. Le chassé l'emporte si le chasseur ne parvient pas à l'attraper dans la limite de coups disponibles.
+
+- Joueur VS IA
+
+Un joueur et une IA sont placés dans les coins opposés de la carte de taille prédéfinie manuellement. Grâce aux 8 possibilités de déplacements possibles, le joueurs et l'IA doivent se déplacer sur la carte pour éliminer l'adversaire. Pour remporter la partie, le joueur doit attraper l'IA avant que celle-ci l'attrape.
+
+
+--- RÈGLES SUPPLÉMENTAIRES :
+
+La taille de la carte est prédéfinie avant le lancement de la partie par les joueurs (largeur et longueur).
+
+Des murs apparaissent aléatoirement sur la carte pour empêcher les joueurs de se déplacer sur certaines cases. (/ jaune)
+
+Des bonus apparaissent aléatoirement sur la carte et permettent aux joueurs qui en ramassent de jouer un tour supplémentaire. (* rose)
+
+Lorsque les joueurs sortent de la carte, ils sont téléportés de l'autre côté si possible. Sinon, ils restent sur place et le tour est c'est au tour de son adversaire de jouer.
+
+La partie est déclarée match nul lorsque les joueurs ont joué trop de coups s'en sêtre attrapés. Le nombre de coups maximum est définie selon la taille de la carte. 
+
+Les déplacements sont aussi valides avec les touches en majuscule.
+
+Si la touche de déplacement est invalide, le tour n'est pas compté et le joueur peut rejouer.
+
+
+--- LORE DU JEU :
+
+Nous sommes en 2137. Le monde a irrémédiablement changé avec l'avancée rapide de la technologie et l'urbanisation incessante. Les mégapoles s'étendent jusqu'au ciel, citadelles de verre et d'acier. La société est contrôlée par un réseau de drones, de caméras et d'IA de surveillance qui rend presque impossible toute tentative d'évasion de la part d'un criminel.
+
+À la suite de l'événement désastreux connu sous le nom de Grand Effondrement en 2098, les gouvernements nationaux se sont rassemblés sous la bannière de l'Union Terrienne Unifiée. Il s'agit d'une unité politique mondiale régissant toutes les mégapoles et dotée de forces de sécurité omniprésentes, la Division de la sécurité et de l'ordre public (Security and Public Order Division, SPOD).
+
+Les agents de la SPOD forment un cadre professionnel composé des meilleurs agents, formés aux innovations les plus récentes en matière de combat et de surveillance. Leur mission consiste essentiellement à maintenir l'ordre dans les mégapoles et à traquer les criminels qui osent s'opposer à l'autorité de l'UTU, l'Union Terrestre Unifiée.
+
+Mais dans ce monde hyperconnecté et surveillé, il existe une faction de renégats qui s'élèvent contre l'oppression : les Cyber-Outlaws. Il s'agit de bandits spécialisés dans la cybernétique, passés maîtres dans l'art de la furtivité et de l'infiltration. Opérant à l'ombre des gratte-ciel, ils utilisent des implants et des gadgets futuristes pour échapper aux griffes de la SPOD, tout cela pour la chute de l'UTU et le rétablissement de la liberté de l'humanité.
+
+Les Cyber-Outlaws viennent de réussir un hold-up audacieux en volant des données critiques sur une conspiration au sein de l'UEU. Ces informations révèlent des plans clandestins visant à étrangler davantage les citoyens par des mesures répressives. Le SPOD, dirigé par l'infatigable inspecteur Voss, est à leurs trousses, déterminé à récupérer les informations volées et à mettre fin à leurs activités subversives.
+
+Dans « Cyber-Escape : Futuristic Fugitives », les joueurs doivent choisir leur camp, soit celui d'un agent du SPOD, soit celui d'un membre des Cyber-Outlaws.
+
+Les agents de la SPOD doivent utiliser leurs compétences de détection avancées et leur puissance de feu pour traquer et appréhender les hors-la-loi.
+Les cyber-Outlaws doivent faire preuve de furtivité, de piratage et d'ingéniosité pour échapper au SPOD, mener à bien des missions secrètes et dévoiler les sombres secrets de l'UEU.
+
+Chaque mouvement doit être planifié stratégiquement pour contourner les murs (représentant des obstacles ou des zones surveillées), et les téléportations (déplacements rapides entre les différents niveaux de la ville) doivent être utilisées judicieusement pour éviter les impasses et les pièges tendus par l'ennemi.
+
+
