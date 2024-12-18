@@ -112,10 +112,13 @@ void dessiner(MinGL &window, bool &collisionJoueur)
 
     if (!collisionJoueur)
         // On dessine le rectangle J2
-        window << nsShape::Rectangle(rectPosJ2, rectPosJ2 + nsGraphics::Vec2D(20, 20), nsGraphics::KWhite);
+        window << nsShape::Rectangle(rectPosJ2, rectPosJ2 + nsGraphics::Vec2D(20, 20), nsGraphics::KRed);
+    else{
+        window << nsGui::Text(nsGraphics::Vec2D(20, 60), "Victoire du chasseur", nsGraphics::KWhite, nsGui::GlutFont::BITMAP_HELVETICA_18);
+    }
 
     // Dessiner l'obstacle
-    window << nsShape::Rectangle(obstacleTopLeft, obstacleBottomRight, nsGraphics::KRed);
+    window << nsShape::Rectangle(obstacleTopLeft, obstacleBottomRight, nsGraphics::KGreen);
 }
 
 bool areRectanglesColliding(const nsGraphics::Vec2D &rect1TopLeft, const nsGraphics::Vec2D &rect1BottomRight,
@@ -193,7 +196,7 @@ void actionFrame(MinGL &window)
 int main()
 {
     // Initialise le système
-    MinGL window("MinGL", nsGraphics::Vec2D(Ktaille, Ktaille), nsGraphics::Vec2D(128, 128), nsGraphics::KBlack); //Nom fenetre, Dimension fenetre, Emplacement de la fenetre au lancement
+    MinGL window("MinGL", nsGraphics::Vec2D(Ktaille, Ktaille), nsGraphics::Vec2D(128, 128), nsGraphics::KGray); //Nom fenetre, Dimension fenetre, Emplacement de la fenetre au lancement
     window.initGlut();
     window.initGraphic();
 
