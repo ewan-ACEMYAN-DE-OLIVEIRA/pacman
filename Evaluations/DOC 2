@@ -1,1 +1,120 @@
+Documentation de MinGL
 
+MinGL est une bibliothèque dédiée à la gestion d'événements, au rendu graphique et au son, permettant de créer des applications interactives.
+Audio (audioengine.cpp)
+
+    setMusic : Charge et configure la musique à partir d'un fichier, avec option de boucle.
+    toggleMusicPlaying : Bascule entre lecture et pause de la musique.
+    setMusicPlaying : Démarre ou met en pause la musique.
+    loadSound : Charge un fichier audio en mémoire pour une lecture ultérieure.
+    removeBuffer : Supprime un fichier audio précédemment chargé de la mémoire.
+    emptyBufferList : Vide la liste des sons chargés en mémoire.
+    startMusicFromBeginning : Redémarre la musique depuis le début.
+    playSoundFromBuffer : Joue un son préchargé en mémoire.
+    playSoundFromFile : Joue un son directement depuis un fichier audio.
+    removeOldSounds : Nettoie les sons terminés de la liste de lecture.
+
+Événements (event_manager.cpp)
+
+    hasEvent : Vérifie si un événement est disponible dans la file d'attente.
+    pushEvent : Ajoute un événement à la file d'événements.
+    pullEvent : Récupère et retire le premier événement de la file.
+    clearEvents : Vide la file d'événements.
+
+Exceptions (cexception.cpp)
+
+    _Edit : Affiche le message de l'exception, incluant le libellé et le code d'erreur associé.
+
+Graphiques (rgbacolor.cpp, vec2d.cpp)
+RGBAcolor
+
+Représente une couleur en utilisant les composantes RGBA, avec des méthodes permettant de manipuler les couleurs.
+
+    operator==, operator!= : Compare deux couleurs.
+    operator+ : Additionne deux couleurs (en termes de composantes).
+    operator* : Multiplie une couleur par un facteur.
+    get/setAlpha, get/setRed/Green/Blue : Accède et modifie les composantes de la couleur.
+
+Vec2D
+
+Représente un vecteur en 2D avec plusieurs opérations géométriques.
+
+    operator+, operator-, operator* : Réalise des opérations arithmétiques sur des vecteurs (addition, soustraction, multiplication).
+    computeMagnitude : Calcule la norme (longueur) du vecteur.
+    isColliding : Vérifie si le vecteur entre en collision avec un rectangle.
+    min : Compare deux vecteurs et retourne celui ayant la plus faible magnitude.
+
+GUI (glut_font.cpp, sprite.cpp, text.h)
+GlutFont (glut_font.cpp)
+
+    GlutFont : Classe utilitaire permettant de gérer facilement les polices de Glut.
+    convertForGlut : Retourne l'identifiant Glut correspondant à la police sélectionnée parmi les différentes polices disponibles (par ex., BITMAP_HELVETICA_10, BITMAP_TIMES_ROMAN_24).
+
+Sprite (sprite.cpp)
+
+Représente une image qui peut être chargée depuis un fichier et dessinée à l'écran.
+
+    Constructeur : Charge une image à partir d'un fichier ou utilise des données de pixels et une taille de ligne spécifiée.
+    draw : Dessine l'image sur la fenêtre en utilisant les pixels et leur couleur.
+    get/setValues : Permet d'obtenir et de définir les valeurs de position du sprite.
+    computeSize : Calcule la taille de l'image à partir des données de pixels et de la taille de ligne.
+
+Text (text.h)
+
+Représente du texte à afficher sur la fenêtre.
+
+    Constructeur : Définit la position, le contenu, la couleur, la police, et les alignements horizontal et vertical du texte.
+    draw : Affiche le texte sur la fenêtre avec la couleur et la position appropriées, en tenant compte des alignements.
+    computeWidth/Height : Calcule la largeur et la hauteur du texte selon la police de Glut.
+    computeVisiblePosition : Calcule la position visible du texte en prenant en compte l'alignement.
+    getValues/setValues : Permet d'accéder et de modifier les valeurs de transition (position, couleur) du texte.
+
+Shapes (shape.cpp)
+Shape
+
+Représente une forme géométrique qui peut être dessinée sur l'écran. Cette classe permet de créer et manipuler différentes formes.
+
+    Constructeur : Crée une forme en définissant ses paramètres géométriques (position, taille, couleur).
+    setPosition : Définit la position de la forme à l'écran.
+    setSize : Modifie la taille de la forme.
+    setColor : Définit la couleur de la forme.
+    draw : Dessine la forme à l'écran selon les paramètres spécifiés.
+    computeArea : Calcule l'aire de la forme (si applicable, en fonction de la forme géométrique).
+    computePerimeter : Calcule le périmètre de la forme.
+
+Transitions (transition.h, transition_contract.cpp, transition_engine.h)
+Transition (transition.h)
+
+Représente une transition entre deux états ou valeurs au cours du temps.
+
+    Constructeur : Initialise la transition avec un contrat de transition, en définissant le temps de début, le temps écoulé, et d'autres paramètres comme le mode de transition.
+    getElapsed : Récupère le temps écoulé depuis le début de la transition.
+    setElapsed : Définit le temps écoulé de la transition, avec mise à jour des valeurs de la cible.
+    addToElapsed : Ajoute du temps au temps écoulé de la transition.
+    isReversed : Indique si la transition est inversée.
+    finish : Termine la transition en appliquant le mode de fin (démarrer ou destination).
+    isFinished : Indique si la transition est terminée.
+    updateValues : Met à jour les valeurs cibles de la transition selon le temps écoulé et le mode (réversible, boucle, etc.).
+    handleEndlife : Gère la fin de la transition, selon le mode défini (fini, inversé, boucle, etc.).
+
+TransitionContract (transition_contract.cpp)
+
+Représente le contrat pour une transition, contenant les informations nécessaires à sa gestion.
+
+    Constructeur : Crée un contrat de transition en spécifiant la cible, l'identifiant, la durée, la destination, le délai et le mode de transition.
+    getId : Récupère l'identifiant unique de la transition.
+    getTransitionMode : Récupère le mode de transition (finie, inversée, boucle, etc.).
+    getBeginning : Récupère les valeurs de départ de la transition.
+    getDestination : Récupère les valeurs cibles de la transition.
+    getDuration : Récupère la durée totale de la transition.
+    setDestinationCallback : Définit une fonction de rappel à appeler à la fin de la transition.
+    getTarget : Récupère la cible (objet de transition).
+
+TransitionEngine (transition_engine.h)
+
+Gère l'exécution des transitions dans un moteur de transitions.
+
+    update : Met à jour toutes les transitions en cours en fonction du temps écoulé (delta).
+    startContract : Démarre une nouvelle transition en utilisant un contrat.
+    finishEveryTransition : Termine toutes les transitions en cours avec un mode de fin spécifique.
+    finishEveryTransitionOfTarget : Termine toutes les transitions associées à une cible donnée.
