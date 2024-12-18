@@ -52,7 +52,7 @@ Contenu du rendu
 
 rajoutez "[X]" si vous avez effectué une amélioration
 
-- 2 ou 3 modes de jeux , un 1v1 , 1vsIA et ChasseurVSChassé.
+- [X] 2 ou 3 modes de jeux , un 1v1 , 1vsIA et ChasseurVSChassé.
 - IA update et intelligente. 
 - [x] Bonus aléatoires ( exemple de 2 tours d'affilés ).
 - [x] Murs aléatoires et pas trop présent non plus.
@@ -61,7 +61,7 @@ rajoutez "[X]" si vous avez effectué une amélioration
 - [x] Explication des règles au préalable.
 - Interface graphique via Mingl.
 - Rajouter des sons avec Mingl.
-- Mode de jeu ChasseurVSChassé : alterner les tours tous les x tours selon le nombre de coups total possible.
+- [X] Mode de jeu ChasseurVSChassé : alterner les tours tous les x tours selon le nombre de coups total possible.
 - Render Distance pour le mode IA
 
 
