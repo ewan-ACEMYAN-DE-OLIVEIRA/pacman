@@ -193,7 +193,7 @@ void actionFrame(MinGL &window)
 int main()
 {
     // Initialise le système
-    MinGL window("test MinGL", nsGraphics::Vec2D(Ktaille, Ktaille), nsGraphics::Vec2D(128, 128), nsGraphics::KBlack); //Nom fenetre, Dimension fenetre, Emplacement de la fenetre au lancement
+    MinGL window("MinGL", nsGraphics::Vec2D(Ktaille, Ktaille), nsGraphics::Vec2D(128, 128), nsGraphics::KBlack); //Nom fenetre, Dimension fenetre, Emplacement de la fenetre au lancement
     window.initGlut();
     window.initGraphic();
 
