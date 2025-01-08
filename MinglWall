@@ -11,18 +11,19 @@
 
 
 using namespace std;
+vector <size_t> posWall;
 
 nsGraphics::Vec2D rectPosJ1;
 nsGraphics::Vec2D rectPosJ2;
-nsGraphics::Vec2D rectPosWall;
-vector <size_t> posWall;
+
 
 bool collisionJoueur = false;
 
 const unsigned Kvitesse = 2;
 
 const int Ktaille = 640;
-
+const nsGraphics::Vec2D PosWallY(100, 100);
+const nsGraphics::Vec2D PosWallX(200, 200);
 const nsGraphics::Vec2D obstacleTopLeft(300, 300);
 const nsGraphics::Vec2D obstacleBottomRight(350, 350);
 
@@ -35,7 +36,6 @@ void clavierJ1(MinGL &window)
     posWall.push_back(20);
     posWall.push_back(30);
     posWall.push_back(40);
-
     if (window.isPressed({'z', false})) { // Haut
         posFuture = rectPosJ1.getY() - Kvitesse;
         if (posFuture >= 0)
@@ -90,8 +90,8 @@ unsigned randomRange (const unsigned& min, const unsigned& max) {
     return min + rand() % (max-min);
 }
 void Pos(){
-    for (int i = 0; i < 40; ++i) {
-        posWall.push_back(randomRange(40, Ktaille-40));
+    for (int i = 0; i < 20; ++i) {
+        posWall.push_back(randomRange(10, Ktaille-40));
     }
 }
 void dessiner(MinGL &window, bool &collisionJoueur)
@@ -131,22 +131,11 @@ void dessiner(MinGL &window, bool &collisionJoueur)
     }
 
     // Dessiner l'obstacle
-    window << nsShape::Rectangle(obstacleTopLeft, obstacleBottomRight, nsGraphics::KGreen);
-    unsigned borneMinRandom = 1;
-    unsigned borneMaxRandom = 6;
-    for (unsigned i = 0; i < 10; ++i) {
-        for (unsigned j = posWall.size(); j < 10; ++j) {
-            if (randomRange(borneMinRandom, borneMaxRandom) == randomRange(borneMinRandom, borneMaxRandom)) {
-                window << nsShape::Rectangle(rectPosWall, rectPosWall + nsGraphics::Vec2D(10,40), nsGraphics::KBlack);
-                rectPosWall.setX(0);
-                rectPosWall.setY(0);
-                rectPosWall.setX(Ktaille - posWall[j]);
-                rectPosWall.setY(Ktaille - posWall[j+1]);
-            }
-        }
-    }
-}
 
+    window << nsShape::Rectangle(obstacleTopLeft, obstacleBottomRight, nsGraphics::KGreen);
+    window << nsShape::Rectangle(PosWallX, PosWallY + nsGraphics::Vec2D(10,40), nsGraphics::KBlack);
+
+}
 bool areRectanglesColliding(const nsGraphics::Vec2D &rect1TopLeft, const nsGraphics::Vec2D &rect1BottomRight,
                             const nsGraphics::Vec2D &rect2TopLeft, const nsGraphics::Vec2D &rect2BottomRight)
 {
@@ -170,7 +159,6 @@ void detectCollisionWithObstacle()
     {
         collision = "Pas de collision avec l'obstacle !";
     }
-
 }
 
 bool detectCollisionEntreJoueur()
@@ -218,9 +206,6 @@ void actionFrame(MinGL &window)
 int main()
 {
     Pos();
-    for (size_t i = 0; i < posWall.size(); ++i) {
-        std::cout << posWall[i] << " ";
-    }
     std::cout << std::endl;
     MinGL window("MinGL", nsGraphics::Vec2D(Ktaille, Ktaille), nsGraphics::Vec2D(128, 128), nsGraphics::KGray); //Nom fenetre, Dimension fenetre, Emplacement de la fenetre au lancement
     // Initialise le système
