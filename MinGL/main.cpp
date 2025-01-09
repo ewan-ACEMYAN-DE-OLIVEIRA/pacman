@@ -14,7 +14,7 @@ using namespace std;
 nsGraphics::Vec2D rectPosJ1;
 nsGraphics::Vec2D rectPosJ2;
 
-bool collisionJoueur = false;
+bool isGameOver = false;
 
 const unsigned Kvitesse = 2;
 
@@ -145,6 +145,56 @@ bool detectCollisionEntreJoueur()
     return collisionJoueur;
 }
 
+
+void resetGame() {
+    rectPosJ1.setX(0);
+    rectPosJ1.setY(0);
+
+    rectPosJ2.setX(Ktaille - 20);
+    rectPosJ2.setY(Ktaille - 20);
+
+    startTime = chrono::steady_clock::now(); // Réinitialisation du timer
+    isGameOver = false; // Le jeu redémarre
+}
+
+void affichageFin(MinGL &window, string &timerText){
+    // Dimensions approximatives du texte
+    int textWidth = 220;  // Largeur approximative
+    int textHeight = 50;  // Hauteur approximative
+    int offsetX = 220;    // Position X du rectangle
+    int offsetY = 150;    // Position Y du rectangle
+    int padding = 10;     // Ajout d'espace autour du texte
+
+    // Dessiner un rectangle de fond derrière le texte
+    window << nsShape::Rectangle(
+        nsGraphics::Vec2D(offsetX - padding, offsetY - padding), // Coin supérieur gauche
+        nsGraphics::Vec2D(offsetX + textWidth + padding, offsetY + textHeight + padding), // Coin inférieur droit
+        nsGraphics::KBlack // Couleur du fond
+        );
+
+    // Affiche le temps (toujours basé sur la dernière valeur calculée)
+    window << nsGui::Text(nsGraphics::Vec2D(230, 200), timerText, nsGraphics::KWhite, nsGui::GlutFont::BITMAP_HELVETICA_12);
+    window << nsGui::Text(nsGraphics::Vec2D(250, 160), "Victoire du joueur 1", nsGraphics::KWhite, nsGui::GlutFont::BITMAP_HELVETICA_18);
+}
+
+void affichageRejouer(MinGL &window){
+    // Dimensions approximatives du texte
+    int textWidth = 280;  // Largeur approximative
+    int textHeight = 50;  // Hauteur approximative
+    int offsetX = 200;    // Position X du rectangle
+    int offsetY = 420;    // Position Y du rectangle
+    int padding = 10;     // Ajout d'espace autour du texte
+
+    // Dessiner un rectangle de fond derrière le texte
+    window << nsShape::Rectangle(
+        nsGraphics::Vec2D(offsetX - padding, offsetY - padding), // Coin supérieur gauche
+        nsGraphics::Vec2D(offsetX + textWidth + padding, offsetY + textHeight + padding), // Coin inférieur droit
+        nsGraphics::KBlue // Couleur du fond (noir ici)
+        );
+
+    window << nsGui::Text(nsGraphics::Vec2D(200, 450), "Appuyez sur Espace pour rejouer", nsGraphics::KWhite, nsGui::GlutFont::BITMAP_HELVETICA_18);
+}
+
 void actionFrame(MinGL &window)
 {
     bool collision = detectCollisionEntreJoueur();
@@ -171,27 +221,19 @@ void actionFrame(MinGL &window)
 
 
     if (collision){
-        // Dimensions approximatives du texte
-        int textWidth = 220;  // Largeur approximative
-        int textHeight = 50;  // Hauteur approximative
-        int offsetX = 220;    // Position X du rectangle
-        int offsetY = 150;    // Position Y du rectangle
-        int padding = 10;     // Ajout d'espace autour du texte
 
-        // Dessiner un rectangle de fond derrière le texte
-        window << nsShape::Rectangle(
-            nsGraphics::Vec2D(offsetX - padding, offsetY - padding), // Coin supérieur gauche
-            nsGraphics::Vec2D(offsetX + textWidth + padding, offsetY + textHeight + padding), // Coin inférieur droit
-            nsGraphics::KBlack // Couleur du fond (noir ici)
-            );
+        isGameOver = true;
 
-        // Affiche le temps (toujours basé sur la dernière valeur calculée)
-        window << nsGui::Text(nsGraphics::Vec2D(230, 200), timerText, nsGraphics::KWhite, nsGui::GlutFont::BITMAP_HELVETICA_12);
-        window << nsGui::Text(nsGraphics::Vec2D(250, 160), "Victoire du joueur 1", nsGraphics::KWhite, nsGui::GlutFont::BITMAP_HELVETICA_18);
+        affichageFin(window, timerText);
+
+        affichageRejouer(window);
+
+        if (window.isPressed({' ', false})) {
+            resetGame();
+        }
+
     }
 }
-
-
 
 int main()
 {
