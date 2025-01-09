@@ -7,9 +7,6 @@
 //Choix du mode de jeu (beta)
 //Les touches Maj fonctionnent aussi
 
-//Problèmes :
-//les cout "rejouer" ne s'affichent pas a cause de clearscreen() de showMatrix(Mat) : il faut régler ça
-
 #include <iostream>
 #include <termios.h>
 #include <unistd.h>
