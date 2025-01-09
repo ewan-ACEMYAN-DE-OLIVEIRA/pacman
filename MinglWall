@@ -23,69 +23,156 @@ const unsigned Kvitesse = 2;
 
 const int Ktaille = 640;
 const nsGraphics::Vec2D PosWallY(100, 100);
-const nsGraphics::Vec2D PosWallX(200, 200);
+const nsGraphics::Vec2D PosWallX(110, 140);
+
+const nsGraphics::Vec2D PosWallY2(330, 120);
+const nsGraphics::Vec2D PosWallX2(340, 180);
+const nsGraphics::Vec2D PosWallY3(460, 300);
+const nsGraphics::Vec2D PosWallX3(450, 500);
+const nsGraphics::Vec2D PosWallY4(200, 400);
+const nsGraphics::Vec2D PosWallX4(260, 410);
+
+const nsGraphics::Vec2D PosWallY5(80, 300);
+const nsGraphics::Vec2D PosWallX5(150, 310);
+const nsGraphics::Vec2D PosWallY6(500, 100);
+const nsGraphics::Vec2D PosWallX6(550, 115);
+const nsGraphics::Vec2D PosWallY7(230, 540);
+const nsGraphics::Vec2D PosWallX7(240, 600);
+
+
 const nsGraphics::Vec2D obstacleTopLeft(300, 300);
 const nsGraphics::Vec2D obstacleBottomRight(350, 350);
 
 chrono::time_point<chrono::steady_clock> startTime;
 
+bool areRectanglesColliding(const nsGraphics::Vec2D &rect1TopLeft, const nsGraphics::Vec2D &rect1BottomRight,
+                            const nsGraphics::Vec2D &rect2TopLeft, const nsGraphics::Vec2D &rect2BottomRight)
+{
+    return !(rect1BottomRight.getX() <= rect2TopLeft.getX() ||  // Rectangle 1 est à gauche de Rectangle 2
+             rect1TopLeft.getX() >= rect2BottomRight.getX() ||  // Rectangle 1 est à droite de Rectangle 2
+             rect1BottomRight.getY() <= rect2TopLeft.getY() ||  // Rectangle 1 est au-dessus de Rectangle 2
+             rect1TopLeft.getY() >= rect2BottomRight.getY());   // Rectangle 1 est en dessous de Rectangle 2
+}
+bool detectCollisionWithWalls(const nsGraphics::Vec2D &playerTopLeft, const nsGraphics::Vec2D &playerBottomRight)
+{
+    // Liste des murs (utilisez les coordonnées déjà définies pour vos murs)
+    vector<pair<nsGraphics::Vec2D, nsGraphics::Vec2D>> walls = {
+        {PosWallX, PosWallY},
+        {PosWallX2, PosWallY2},
+        {PosWallX3, PosWallY3},
+        {PosWallX4, PosWallY4},
+        {PosWallX5, PosWallY5},
+        {PosWallX6, PosWallY6},
+        {PosWallX7, PosWallY7}
+    };
+
+    // Vérifie les collisions avec tous les murs
+    for (const auto &wall : walls)
+    {
+        if (areRectanglesColliding(playerTopLeft, playerBottomRight, wall.first, wall.second))
+        {
+            return true; // Collision détectée
+        }
+    }
+
+    return false; // Pas de collision
+}
+
 void clavierJ1(MinGL &window)
 {
-    // On vérifie si ZQSD est pressé, et met a jour la position
-    int posFuture;posWall.push_back(10);
-    posWall.push_back(20);
-    posWall.push_back(30);
-    posWall.push_back(40);
+    // On vérifie si ZQSD est pressé, et met à jour la position
+    int posFuture;
+
     if (window.isPressed({'z', false})) { // Haut
         posFuture = rectPosJ1.getY() - Kvitesse;
-        if (posFuture >= 0)
-            rectPosJ1.setY(posFuture);
+        if (posFuture >= 0) {
+            nsGraphics::Vec2D futurePos(rectPosJ1.getX(), posFuture);
+            nsGraphics::Vec2D futureBottomRight = futurePos + nsGraphics::Vec2D(20, 20);
+            if (!detectCollisionWithWalls(futurePos, futureBottomRight))
+                rectPosJ1.setY(posFuture);
+        }
     }
+
     if (window.isPressed({'s', false})) { // Bas
-        int posFuture = rectPosJ1.getY() + Kvitesse;
-        if (posFuture + 20 <= Ktaille) // 20 : hauteur du rectangle, 640 : taille de l'écran
-            rectPosJ1.setY(posFuture);
+        posFuture = rectPosJ1.getY() + Kvitesse;
+        if (posFuture + 20 <= Ktaille) { // 20 : hauteur du rectangle, 640 : taille de l'écran
+            nsGraphics::Vec2D futurePos(rectPosJ1.getX(), posFuture);
+            nsGraphics::Vec2D futureBottomRight = futurePos + nsGraphics::Vec2D(20, 20);
+            if (!detectCollisionWithWalls(futurePos, futureBottomRight))
+                rectPosJ1.setY(posFuture);
+        }
     }
+
     if (window.isPressed({'q', false})) { // Gauche
-        int posFuture = rectPosJ1.getX() - Kvitesse;
-        if (posFuture >= 0)
-            rectPosJ1.setX(posFuture);
+        posFuture = rectPosJ1.getX() - Kvitesse;
+        if (posFuture >= 0) {
+            nsGraphics::Vec2D futurePos(posFuture, rectPosJ1.getY());
+            nsGraphics::Vec2D futureBottomRight = futurePos + nsGraphics::Vec2D(20, 20);
+            if (!detectCollisionWithWalls(futurePos, futureBottomRight))
+                rectPosJ1.setX(posFuture);
+        }
     }
+
     if (window.isPressed({'d', false})) { // Droite
-        int posFuture = rectPosJ1.getX() + Kvitesse;
-        if (posFuture + 20 <= Ktaille) // 20 : largeur du rectangle, 640 : taille de l'écran
-            rectPosJ1.setX(posFuture);
+        posFuture = rectPosJ1.getX() + Kvitesse;
+        if (posFuture + 20 <= Ktaille) { // 20 : largeur du rectangle, 640 : taille de l'écran
+            nsGraphics::Vec2D futurePos(posFuture, rectPosJ1.getY());
+            nsGraphics::Vec2D futureBottomRight = futurePos + nsGraphics::Vec2D(20, 20);
+            if (!detectCollisionWithWalls(futurePos, futureBottomRight))
+                rectPosJ1.setX(posFuture);
+        }
     }
 }
 
-void clavierJ2(MinGL &window,  bool &collisionJoueur)
+void clavierJ2(MinGL &window, bool &collisionJoueur)
 {
-    if (!collisionJoueur){
-        // On vérifie si ZQSD est pressé, et met a jour la position
+    if (!collisionJoueur)
+    {
+        // On vérifie si ZQSD est pressé, et met à jour la position
         int posFuture;
 
         if (window.isPressed({'o', false})) { // Haut
             posFuture = rectPosJ2.getY() - Kvitesse;
-            if (posFuture >= 0)
-                rectPosJ2.setY(posFuture);
+            if (posFuture >= 0) {
+                nsGraphics::Vec2D futurePos(rectPosJ2.getX(), posFuture);
+                nsGraphics::Vec2D futureBottomRight = futurePos + nsGraphics::Vec2D(20, 20);
+                if (!detectCollisionWithWalls(futurePos, futureBottomRight))
+                    rectPosJ2.setY(posFuture);
+            }
         }
+
         if (window.isPressed({'l', false})) { // Bas
-            int posFuture = rectPosJ2.getY() + Kvitesse;
-            if (posFuture + 20 <= Ktaille) // 20 : hauteur du rectangle, 640 : taille de l'écran
-                rectPosJ2.setY(posFuture);
+            posFuture = rectPosJ2.getY() + Kvitesse;
+            if (posFuture + 20 <= Ktaille) { // 20 : hauteur du rectangle, 640 : taille de l'écran
+                nsGraphics::Vec2D futurePos(rectPosJ2.getX(), posFuture);
+                nsGraphics::Vec2D futureBottomRight = futurePos + nsGraphics::Vec2D(20, 20);
+                if (!detectCollisionWithWalls(futurePos, futureBottomRight))
+                    rectPosJ2.setY(posFuture);
+            }
         }
+
         if (window.isPressed({'k', false})) { // Gauche
-            int posFuture = rectPosJ2.getX() - Kvitesse;
-            if (posFuture >= 0)
-                rectPosJ2.setX(posFuture);
+            posFuture = rectPosJ2.getX() - Kvitesse;
+            if (posFuture >= 0) {
+                nsGraphics::Vec2D futurePos(posFuture, rectPosJ2.getY());
+                nsGraphics::Vec2D futureBottomRight = futurePos + nsGraphics::Vec2D(20, 20);
+                if (!detectCollisionWithWalls(futurePos, futureBottomRight))
+                    rectPosJ2.setX(posFuture);
+            }
         }
+
         if (window.isPressed({'m', false})) { // Droite
-            int posFuture = rectPosJ2.getX() + Kvitesse;
-            if (posFuture + 20 <= Ktaille) // 20 : largeur du rectangle, 640 : taille de l'écran
-                rectPosJ2.setX(posFuture);
+            posFuture = rectPosJ2.getX() + Kvitesse;
+            if (posFuture + 20 <= Ktaille) { // 20 : largeur du rectangle, 640 : taille de l'écran
+                nsGraphics::Vec2D futurePos(posFuture, rectPosJ2.getY());
+                nsGraphics::Vec2D futureBottomRight = futurePos + nsGraphics::Vec2D(20, 20);
+                if (!detectCollisionWithWalls(futurePos, futureBottomRight))
+                    rectPosJ2.setX(posFuture);
+            }
         }
     }
 }
+
 unsigned randomRange (const unsigned& min, const unsigned& max) {
     return min + rand() % (max-min);
 }
@@ -133,18 +220,17 @@ void dessiner(MinGL &window, bool &collisionJoueur)
     // Dessiner l'obstacle
 
     window << nsShape::Rectangle(obstacleTopLeft, obstacleBottomRight, nsGraphics::KGreen);
-    window << nsShape::Rectangle(PosWallX, PosWallY + nsGraphics::Vec2D(10,40), nsGraphics::KBlack);
+    window << nsShape::Rectangle(PosWallX, PosWallY, nsGraphics::KBlack);
+    window << nsShape::Rectangle(PosWallX2, PosWallY2, nsGraphics::KBlack);
+    window << nsShape::Rectangle(PosWallX3, PosWallY3, nsGraphics::KBlack);
+    window << nsShape::Rectangle(PosWallX4, PosWallY4, nsGraphics::KBlack);
+    window << nsShape::Rectangle(PosWallX5, PosWallY5, nsGraphics::KBlack);
+    window << nsShape::Rectangle(PosWallX6, PosWallY6, nsGraphics::KBlack);
+    window << nsShape::Rectangle(PosWallX7, PosWallY7, nsGraphics::KBlack);
+
+
 
 }
-bool areRectanglesColliding(const nsGraphics::Vec2D &rect1TopLeft, const nsGraphics::Vec2D &rect1BottomRight,
-                            const nsGraphics::Vec2D &rect2TopLeft, const nsGraphics::Vec2D &rect2BottomRight)
-{
-    return !(rect1BottomRight.getX() <= rect2TopLeft.getX() ||  // Rectangle 1 est à gauche de Rectangle 2
-             rect1TopLeft.getX() >= rect2BottomRight.getX() ||  // Rectangle 1 est à droite de Rectangle 2
-             rect1BottomRight.getY() <= rect2TopLeft.getY() ||  // Rectangle 1 est au-dessus de Rectangle 2
-             rect1TopLeft.getY() >= rect2BottomRight.getY());   // Rectangle 1 est en dessous de Rectangle 2
-}
-
 void detectCollisionWithObstacle()
 {
     string collision;
