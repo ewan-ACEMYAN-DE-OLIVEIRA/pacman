@@ -39,7 +39,7 @@ typedef vector <char> CVLine; // un type représentant une ligne de la grille
 typedef vector <CVLine> CMatrix; // un type représentant la grille
 typedef pair   <unsigned, unsigned> CPosition; // un type représentant une coordonnée dans la grille
 
-void configureTerminal(bool enable) {
+void configureTerminal(bool enable) { //configuration du terminal
     struct termios touche;
     tcgetattr(STDIN_FILENO, &touche);
     if(enable) {
@@ -63,7 +63,7 @@ const char kEmpty        = '+';
 const char kWall         = '/';
 const char kBonus        = '*';
 
-void  showMatrix (const CMatrix & Mat,bool & rejouer){
+void  showMatrix (const CMatrix & Mat,bool & rejouer){ //affichage de la matrice qui représente la carte
     clearScreen();
     for(auto i=0; i<Mat.size(); ++i){
         for(auto j=0; j<Mat[i].size(); ++j){
@@ -145,7 +145,7 @@ void initMat (CMatrix & Mat, unsigned nbLine, unsigned nbColumn, CPosition & pos
 }
 
 
-void moveToken(CMatrix &Mat, char move, CPosition &pos, bool &rejouer) {
+void moveToken(CMatrix &Mat, char move, CPosition &pos, bool &rejouer) { // les déplacements du joueur
     char element = Mat[pos.first][pos.second];
     Mat[pos.first][pos.second] = kEmpty;
     switch(tolower(move)) {
@@ -223,7 +223,7 @@ void moveToken(CMatrix &Mat, char move, CPosition &pos, bool &rejouer) {
     Mat[pos.first][pos.second] = element;
 }
 
-void showRules() {
+void showRules() { //afficher les règles
     cout << endl << "------------------------" << endl << "Règles supplémentaires :\n" << "------------------------" << endl
          << "z : se déplacer vers le haut" << endl
          << "q : se déplacer vers la gauche"<< endl
