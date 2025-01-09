@@ -52,70 +52,42 @@ void clavierJ1(MinGL &window)
     }
 }
 
-void clavierJ2(MinGL &window,  bool &collisionJoueur)
+void clavierJ2(MinGL &window)
 {
-    if (!collisionJoueur){
-        // On vérifie si ZQSD est pressé, et met a jour la position
-        int posFuture;
 
-        if (window.isPressed({'o', false})) { // Haut
-            posFuture = rectPosJ2.getY() - Kvitesse;
-            if (posFuture >= 0)
-                rectPosJ2.setY(posFuture);
-        }
-        if (window.isPressed({'l', false})) { // Bas
-            int posFuture = rectPosJ2.getY() + Kvitesse;
-            if (posFuture + 20 <= Ktaille) // 20 : hauteur du rectangle, 640 : taille de l'écran
-                rectPosJ2.setY(posFuture);
-        }
-        if (window.isPressed({'k', false})) { // Gauche
-            int posFuture = rectPosJ2.getX() - Kvitesse;
-            if (posFuture >= 0)
-                rectPosJ2.setX(posFuture);
-        }
-        if (window.isPressed({'m', false})) { // Droite
-            int posFuture = rectPosJ2.getX() + Kvitesse;
-            if (posFuture + 20 <= Ktaille) // 20 : largeur du rectangle, 640 : taille de l'écran
-                rectPosJ2.setX(posFuture);
-        }
+    // On vérifie si ZQSD est pressé, et met a jour la position
+    int posFuture;
+
+    if (window.isPressed({'o', false})) { // Haut
+        posFuture = rectPosJ2.getY() - Kvitesse;
+        if (posFuture >= 0)
+            rectPosJ2.setY(posFuture);
+    }
+    if (window.isPressed({'l', false})) { // Bas
+        int posFuture = rectPosJ2.getY() + Kvitesse;
+        if (posFuture + 20 <= Ktaille) // 20 : hauteur du rectangle, 640 : taille de l'écran
+            rectPosJ2.setY(posFuture);
+    }
+    if (window.isPressed({'k', false})) { // Gauche
+        int posFuture = rectPosJ2.getX() - Kvitesse;
+        if (posFuture >= 0)
+            rectPosJ2.setX(posFuture);
+    }
+    if (window.isPressed({'m', false})) { // Droite
+        int posFuture = rectPosJ2.getX() + Kvitesse;
+        if (posFuture + 20 <= Ktaille) // 20 : largeur du rectangle, 640 : taille de l'écran
+            rectPosJ2.setX(posFuture);
     }
 }
 
-void dessiner(MinGL &window, bool &collisionJoueur)
+void dessiner(MinGL &window)
 {
-    // // MinGL 2 supporte l'affichage de texte sur la fenêtre assez simplement.
-    // window << nsGui::Text(nsGraphics::Vec2D(20, 20), "Hello, World!", nsGraphics::KWhite);
-
-    // // Vous pouvez aussi changer la police (parmi un choix assez limité, malheureusement).
-    // window << nsGui::Text(nsGraphics::Vec2D(20, 40), "Hello, World! mais plus grand", nsGraphics::KWhite, nsGui::GlutFont::BITMAP_9_BY_15);
-    // window << nsGui::Text(nsGraphics::Vec2D(20, 60), "Hello, World! mais en Helvetica 18", nsGraphics::KWhite, nsGui::GlutFont::BITMAP_HELVETICA_18);
-
-    // // L'alignement vertical et horizontal peut aussi être changé.
-    // window << nsShape::Line(nsGraphics::Vec2D(320, 120), nsGraphics::Vec2D(320, 220), nsGraphics::KRed);
-    // window << nsShape::Line(nsGraphics::Vec2D(10, 310), nsGraphics::Vec2D(630, 310), nsGraphics::KRed);
-
-    // window << nsGui::Text(nsGraphics::Vec2D(320, 135), "Gauche horizontalement", nsGraphics::KWhite, nsGui::GlutFont::BITMAP_9_BY_15);
-    // window << nsGui::Text(nsGraphics::Vec2D(320, 160), "Centre horizontalement", nsGraphics::KWhite, nsGui::GlutFont::BITMAP_9_BY_15,
-    //                       nsGui::Text::HorizontalAlignment::ALIGNH_CENTER);
-    // window << nsGui::Text(nsGraphics::Vec2D(320, 185), "Droite horizontalement", nsGraphics::KWhite, nsGui::GlutFont::BITMAP_9_BY_15,
-    //                       nsGui::Text::HorizontalAlignment::ALIGNH_RIGHT);
-
-    // window << nsGui::Text(nsGraphics::Vec2D(15, 310), "Bas verticalement", nsGraphics::KWhite, nsGui::GlutFont::BITMAP_9_BY_15,
-    //                       nsGui::Text::HorizontalAlignment::ALIGNH_LEFT, nsGui::Text::VerticalAlignment::ALIGNV_BOTTOM);
-    // window << nsGui::Text(nsGraphics::Vec2D(200, 310), "Centre verticalement", nsGraphics::KWhite, nsGui::GlutFont::BITMAP_9_BY_15,
-    //                       nsGui::Text::HorizontalAlignment::ALIGNH_LEFT, nsGui::Text::VerticalAlignment::ALIGNV_CENTER);
-    // window << nsGui::Text(nsGraphics::Vec2D(400, 310), "Haut verticalement", nsGraphics::KWhite, nsGui::GlutFont::BITMAP_9_BY_15,
-    //                       nsGui::Text::HorizontalAlignment::ALIGNH_LEFT, nsGui::Text::VerticalAlignment::ALIGNV_TOP);
 
     // On dessine le rectangle J1
     window << nsShape::Rectangle(rectPosJ1, rectPosJ1 + nsGraphics::Vec2D(20, 20), nsGraphics::KCyan);
 
-    if (!collisionJoueur)
-        // On dessine le rectangle J2
-        window << nsShape::Rectangle(rectPosJ2, rectPosJ2 + nsGraphics::Vec2D(20, 20), nsGraphics::KRed);
-    else{
-        window << nsGui::Text(nsGraphics::Vec2D(20, 60), "Victoire du chasseur", nsGraphics::KWhite, nsGui::GlutFont::BITMAP_HELVETICA_18);
-    }
+    // On dessine le rectangle J2
+    window << nsShape::Rectangle(rectPosJ2, rectPosJ2 + nsGraphics::Vec2D(20, 20), nsGraphics::KRed);
 
     // Dessiner l'obstacle
     window << nsShape::Rectangle(obstacleTopLeft, obstacleBottomRight, nsGraphics::KGreen);
@@ -130,24 +102,24 @@ bool areRectanglesColliding(const nsGraphics::Vec2D &rect1TopLeft, const nsGraph
              rect1TopLeft.getY() >= rect2BottomRight.getY());   // Rectangle 1 est en dessous de Rectangle 2
 }
 
-void detectCollisionWithObstacle()
-{
-    string collision;
+// void detectCollisionWithObstacle()
+// {
+//     string collision;
 
-    // Définir les coins du rectangle mobile
-    nsGraphics::Vec2D rect1BottomRight = rectPosJ1 + nsGraphics::Vec2D(20, 20);
+//     // Définir les coins du rectangle mobile
+//     nsGraphics::Vec2D rect1BottomRight = rectPosJ1 + nsGraphics::Vec2D(20, 20);
 
-    // Vérifier si les rectangles se chevauchent
-    if (areRectanglesColliding(rectPosJ1, rect1BottomRight, obstacleTopLeft, obstacleBottomRight))
-    {
-        collision = "Collision avec l'obstacle !";
-    }
-    else
-    {
-        collision = "Pas de collision avec l'obstacle !";
-    }
+//     // Vérifier si les rectangles se chevauchent
+//     if (areRectanglesColliding(rectPosJ1, rect1BottomRight, obstacleTopLeft, obstacleBottomRight))
+//     {
+//         collision = "Collision avec l'obstacle !";
+//     }
+//     else
+//     {
+//         collision = "Pas de collision avec l'obstacle !";
+//     }
 
-}
+// }
 
 bool detectCollisionEntreJoueur()
 {
@@ -175,23 +147,51 @@ bool detectCollisionEntreJoueur()
 
 void actionFrame(MinGL &window)
 {
-    collisionJoueur = detectCollisionEntreJoueur();
-    clavierJ1(window);
-    clavierJ2(window, collisionJoueur);
-    detectCollisionWithObstacle();
+    bool collision = detectCollisionEntreJoueur();
 
-    // Calcule le temps écoulé
-    auto currentTime = chrono::steady_clock::now();
-    auto elapsedTime = chrono::duration_cast<chrono::seconds>(currentTime - startTime).count();
+    static long lastElapsedTime = 0; // Variable persistante pour conserver la dernière valeur du chrono
+    string timerText = "Le joueur 2 a survecu pendant : " + to_string(lastElapsedTime)  + "s !";
 
-    // Affiche le temps écoulé à l'écran
-    string timerText = "Temps: " + to_string(elapsedTime) + "s";
-    window << nsGui::Text(nsGraphics::Vec2D(20, 50), timerText, nsGraphics::KWhite);
+    if (!collision) {
+        // Actions pendant que le jeu est en cours
+        clavierJ1(window);
+        clavierJ2(window);
 
-    // Dessiner le reste
-    dessiner(window, collisionJoueur);
+        // Calcule le temps écoulé
+        auto currentTime = chrono::steady_clock::now();
+        lastElapsedTime = chrono::duration_cast<chrono::seconds>(currentTime - startTime).count();
 
+        // Affiche le temps
+        timerText = "Temps: " + to_string(lastElapsedTime) + "s";
+        window << nsGui::Text(nsGraphics::Vec2D(20, 50), timerText, nsGraphics::KWhite, nsGui::GlutFont::BITMAP_9_BY_15);
+    }
+
+    // Dessiner le jeu
+    dessiner(window);
+
+
+    if (collision){
+        // Dimensions approximatives du texte
+        int textWidth = 220;  // Largeur approximative
+        int textHeight = 50;  // Hauteur approximative
+        int offsetX = 220;    // Position X du rectangle
+        int offsetY = 150;    // Position Y du rectangle
+        int padding = 10;     // Ajout d'espace autour du texte
+
+        // Dessiner un rectangle de fond derrière le texte
+        window << nsShape::Rectangle(
+            nsGraphics::Vec2D(offsetX - padding, offsetY - padding), // Coin supérieur gauche
+            nsGraphics::Vec2D(offsetX + textWidth + padding, offsetY + textHeight + padding), // Coin inférieur droit
+            nsGraphics::KBlack // Couleur du fond (noir ici)
+            );
+
+        // Affiche le temps (toujours basé sur la dernière valeur calculée)
+        window << nsGui::Text(nsGraphics::Vec2D(230, 200), timerText, nsGraphics::KWhite, nsGui::GlutFont::BITMAP_HELVETICA_12);
+        window << nsGui::Text(nsGraphics::Vec2D(250, 160), "Victoire du joueur 1", nsGraphics::KWhite, nsGui::GlutFont::BITMAP_HELVETICA_18);
+    }
 }
+
+
 
 int main()
 {
@@ -205,8 +205,8 @@ int main()
     // Variable qui tient le temps de frame
     chrono::microseconds frameTime = chrono::microseconds::zero();
 
-    rectPosJ2.setX(0);
-    rectPosJ2.setY(0);
+    rectPosJ1.setX(0);
+    rectPosJ1.setY(0);
 
     rectPosJ2.setX(Ktaille - 20);
     rectPosJ2.setY(Ktaille - 20);
