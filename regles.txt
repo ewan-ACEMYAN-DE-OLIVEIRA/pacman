@@ -19,11 +19,15 @@ Deux joueurs sont placés dans les coins opposés de la carte de taille prédéf
 
 - Chasseur VS Chassé
 
-Deux joueurs sont placés dans les coins opposés de la carte de taille prédéfinie manuellement. Un des joueurs est le chasseur et l'autre le chassé. Grâce aux 8 possibilités de déplacements possibles, le chassé doit à tout pris échapper au chasseur. Tous les 4 déplacements par joueur, les rôles de chasseur et chassé sont échangés. La chasseur l'emporte s'il attrape le chassé. Le chassé l'emporte si le chasseur ne parvient pas à l'attraper dans la limite de coups disponibles.
-
+Deux joueurs sont placés dans les coins opposés de la carte de taille prédéfinie manuellement. Un des joueurs est le chasseur et l'autre le chassé. Grâce aux 8 possibilités de déplacements possibles, le chassé doit à tout prix échapper au chasseur. Tous les 4 déplacements par joueur, les rôles de chasseur et chassé sont échangés. Le chasseur l'emporte s'il attrape le chassé. Le chassé l'emporte si le chasseur ne parvient pas à l'attraper dans la limite de coups disponibles.
+    
+    --Alternative version graphique
+      Cette fois-ci, l'interface est une interface graphique faite à l'aide de MinGL, le chasseur joue à l'aide de z,q,s,d et le chassé o,k,l,m. Les deux joueurs joue donc en temps réel. Des murs sont dispersés sur la map pour dynamiser le jeu ainsi que des buissons pour se cacher. 
+      A la fin le score en temps est affiché, le but étant de survivre aussi longtemps que possible pour le chassé et de capturer le plus rapidement possible pour le chasseur. À la fin, vous pouvez également appuyer sur 'espace' pour rejouer. Essayez,  c'est très addictif !!!!!
+  
 - Joueur VS IA
 
-Un joueur et une IA sont placés dans les coins opposés de la carte de taille prédéfinie manuellement. Grâce aux 8 possibilités de déplacements possibles, le joueurs et l'IA doivent se déplacer sur la carte pour éliminer l'adversaire. Pour remporter la partie, le joueur doit attraper l'IA avant que celle-ci l'attrape.
+Un joueur et une IA sont placés dans les coins opposés de la carte de taille prédéfinie manuellement. Grâce aux 8 possibilités de déplacements possibles, le joueur et l'IA doivent se déplacer sur la carte pour éliminer l'adversaire. Pour remporter la partie, le joueur doit attraper l'IA avant que celle-ci l'attrape.
 
 
 --- RÈGLES SUPPLÉMENTAIRES :
@@ -36,7 +40,7 @@ Des bonus apparaissent aléatoirement sur la carte et permettent aux joueurs qui
 
 Lorsque les joueurs sortent de la carte, ils sont téléportés de l'autre côté si possible. Sinon, ils restent sur place et c'est à son adversaire de jouer.
 
-La partie est déclarée match nul lorsque les joueurs ont joué trop de coups s'en sêtre attrapés. Le nombre de coups maximum est définie selon la taille de la carte. 
+La partie est déclarée match nul lorsque les joueurs ont joué trop de coups s'en sêtre attrapés. Le nombre de coups maximum est défini selon la taille de la carte. 
 
 Les déplacements sont aussi valides avec les touches en majuscule.
 
