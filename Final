@@ -7,11 +7,12 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <csignal>
-#include "source/AStar.hpp"
 #include "mingl/include/mingl/mingl.h"
 #include "mingl/include/mingl/gui/text.h"
 #include "mingl/include/mingl/shape/line.h"
 #include "mingl/include/mingl/shape/rectangle.h"
+
+#include "source/AStar.hpp"
 
 using namespace std;
 vector <size_t> posWall;
@@ -236,7 +237,7 @@ void ShowEnd(MinGL &window, string &timerText){
 
     // Affiche le temps
     window << nsGui::Text(nsGraphics::Vec2D(230, 200), timerText, nsGraphics::KWhite, nsGui::GlutFont::BITMAP_HELVETICA_12);
-    window << nsGui::Text(nsGraphics::Vec2D(250, 160), "victory du player 1", nsGraphics::KWhite, nsGui::GlutFont::BITMAP_HELVETICA_18);
+    window << nsGui::Text(nsGraphics::Vec2D(250, 160), "victory du joueur 1", nsGraphics::KWhite, nsGui::GlutFont::BITMAP_HELVETICA_18);
 }
 void Replay(MinGL &window){
     // Dimensions txt
@@ -253,7 +254,7 @@ void Replay(MinGL &window){
         nsGraphics::KBlue
         );
 
-    window << nsGui::Text(nsGraphics::Vec2D(200, 450), "Appuyez sur Espace pour replay", nsGraphics::KWhite, nsGui::GlutFont::BITMAP_HELVETICA_18);
+    window << nsGui::Text(nsGraphics::Vec2D(200, 450), "Appuyez sur Espace pour rejouer", nsGraphics::KWhite, nsGui::GlutFont::BITMAP_HELVETICA_18);
 }
 void resetGame() {
     rectPosJ1.setX(0);
@@ -269,7 +270,7 @@ void actionFrame(MinGL &window){
     bool collision = detectPlayerCollision();
 
     static long lastElapsedTime = 0; //Variable chrono
-    string timerText = "Le player 2 a survecu pendant : " + to_string(lastElapsedTime)  + "s !";
+    string timerText = "Le joueur 2 a survecu pendant : " + to_string(lastElapsedTime)  + "s !";
 
     if (!collision) {
         // MAJ position player
@@ -418,7 +419,7 @@ unsigned randomRange (const unsigned& min, const unsigned& max) {
 CPosition ia(CMatrix & Mat, CPosition & posPlayer2, CPosition & posPlayer1){
     AStar::Generator generator;
     generator.setWorldSize({Mat.size(), Mat[0].size()});
-    generator.setDiagonalMovement(false);
+    generator.setDiagonalMovement(true);
     auto coup = generator.findPath({posPlayer1.first, posPlayer1.second}, {posPlayer2.first, posPlayer2.second});
     return {coup[1].x, coup[1].y};
 }
@@ -506,7 +507,7 @@ void moveToken(CMatrix &Mat, char move, CPosition &pos, bool &replay) {
         }
         break;
     case 'w': // Diagonal bas-gauche
-        if ((pos.first < Mat.size() - 1 && pos.second > 0) && Mat[pos.first + 1][pos.second - 1] != kWall) {
+        if ((pos.first < Mat.size() - 1 && pos.second > 0) && Mat[pos.first + 1][pos.second - 1] != kWall){
             pos.first += 1;
             pos.second -= 1;
         }
@@ -546,7 +547,12 @@ void showRules() {
          << "a : se déplacer en haut à gauche" << endl
          << "w : se déplacer en bas à gauche"<< endl
          << "c : se  déplacer en bas à droite"<< endl
-         << "e : se déplacer en haut à droite" <<endl << "------" << endl;
+         << "e : se déplacer en haut à droite" <<endl
+         << "o : se déplacer en haut (joueur 2 interface graphique)"<<endl
+         <<"k : se déplacer à gauche (joueur 2 interface graphique)"<<endl
+         <<"l : se déplacer en bas (joueur 2 interface graphique)"<<endl
+         <<"m : se déplacer à droite (joueur 2 interface graphique)"<<endl << "------" << endl;
+
     cout << "Lore :\n" << "------" << endl
          << "Nous sommes en 2137. Le monde a irrémédiablement changé avec l'avancée rapide de la technologie et l'urbanisation incessante. Les mégapoles s'étendent jusqu'au ciel, citadelles de verre et d'acier. La société est contrôlée par un réseau de drones, de caméras et d'IA de surveillance qui rend presque impossible toute tentative d'évasion de la part d'un criminel.\n"
          << "À la suite de l'événement désastreux connu sous le nom de Grand Effondrement en 2098, les gouvernements nationaux se sont rassemblés sous la bannière de l'Union Terrienne Unifiée. Il s'agit d'une unité politique mondiale régissant toutes les mégapoles et dotée de forces de sécurité omniprésentes, la Division de la sécurité et de l'ordre public (Security and Public Order Division, SPOD).\n"
@@ -565,8 +571,6 @@ void resetTerminal(int sig) {
     configureTerminal(true);
     exit(0);  // Quitter proprement le programme
 }
-
-
 
 int ppal(){
     srand(time(NULL));
@@ -590,7 +594,6 @@ int ppal(){
     int player = 1;
     char game_mode;
     initMat(Mat, nbLine, nbColumn, posPlayer1, posPlayer2);
-    showMatrix(Mat,replay);
     char move;
     cout << "Appuyez sur 'm' pour commencer le jeu ou 'n' pour lire les règles.\n";
     while (true) {
@@ -618,7 +621,7 @@ int ppal(){
     cout<<"Appuyez sur 'j' pour commencer le mode 1v1, sur 'k' pour commencer le mode 1vIA, sur 'l' pour le mode ChasseurVChassé ou sur 'g' pour le mode ChasseurVChassé version Graphique\n";
     while(true){
         move=entree(move);
-        if(tolower(move)=='j' || tolower(move)=='k' || tolower(move)=='l'){
+        if(tolower(move)=='j' || tolower(move)=='k' || tolower(move)=='l'|| tolower(move)=='g'){
             if(tolower(move)=='j'){
                 game_mode='j';
                 break;
@@ -629,6 +632,10 @@ int ppal(){
             }
             if(tolower(move)=='l'){
                 game_mode='l';
+                break;
+            }
+            if(tolower(move)=='g'){
+                game_mode='g';
                 break;
             }
         }
@@ -693,7 +700,7 @@ int ppal(){
                 cout << "Coup numero " << nbMove << endl;
                 color(KReset);
             }
-            cout << "Coup du player " << player << " : ";
+            cout << "Coup du joueur " << player << " : ";
             if (posPlayer1 == posPlayer2)
                 victory = true;
             else
@@ -707,7 +714,7 @@ int ppal(){
             else{
                 color(KRed);
             }
-            cout<<"victory Royale du player "<< player << " !"<<endl;
+            cout<<"victory Royale du joueur "<< player << " !"<<endl;
             color(KReset);
             cout << "Bien joué !" << endl ;
         }
@@ -733,7 +740,7 @@ int ppal(){
                     moveToken(Mat, move, posPlayer1,replay);
                     while (replay) {
                         showMatrix(Mat,replay);
-                        cout << "Rejoue, player " << player << " : ";
+                        cout << "Rejoue, joueur " << player << " : ";
                         move = entree(move) ;
                         cout << endl;
                         moveToken(Mat, move, posPlayer1, replay);
@@ -750,7 +757,7 @@ int ppal(){
                     moveToken(Mat, move, posPlayer2,replay);
                     while (replay) {
                         showMatrix(Mat,replay);
-                        cout << "Rejoue, player " << player << " : ";
+                        cout << "Rejoue, joueur " << player << " : ";
                         move = entree(move) ;
                         cout << endl;
                         moveToken(Mat, move, posPlayer2, replay);
@@ -772,14 +779,14 @@ int ppal(){
                 cout << "Coup numero " << nbMove << endl;
                 color(KReset);
             }
-            cout << "Coup du player " << player << " : ";
+            cout << "Coup du joueur " << player << " : ";
             if (posPlayer1 == posPlayer2)
                 victory = true;
             else
                 ++nbMove;
             if(nbMove%10==0){
                 hunter=(nbMove/10)%2;
-                cout<<"Le chasseur est le player: "<<chasseur+1<<endl;
+                cout<<"Le chasseur est le joueur: "<<hunter+1<<endl;
             }
         }
         if (victory)
@@ -800,7 +807,7 @@ int ppal(){
                 if(tolower(move) == 'a' || tolower(move) == 'z' || tolower(move) == 'e' || tolower(move) == 'd' || tolower(move) == 'c' || tolower(move) == 'x' || tolower(move) == 'w' || tolower(move) == 'q'){
                     moveToken(Mat, move, posPlayer1,replay);
                     while (replay) {
-                        cout << "Rejoue, player " << player << " : ";
+                        cout << "Rejoue, joueur " << player << " : ";
                         showMatrix(Mat,replay);
                         move = entree(move) ;
                         cout << endl;
@@ -828,7 +835,7 @@ int ppal(){
                 cout << "Coup numero " << nbMove << endl;
                 color(KReset);
             }
-            cout << "Coup du player " << player << " : ";
+            cout << "Coup du joueur " << player << " : ";
             if (posPlayer1 == posPlayer2)
                 victory = true;
             else
@@ -842,7 +849,11 @@ int ppal(){
             else{
                 color(KRed);
             }
-            cout<<"victory Royale du player "<< player << " !"<<endl;
+            if (player == 1){
+               cout<<"victory Royale de l'IA !"<<endl;
+            }
+            else{
+                cout<<"victory Royale du joueur 1 !"<<endl;}
             color(KReset);
             cout << "Bien joué !" << endl ;
         }
