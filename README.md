@@ -59,7 +59,7 @@ rajoutez "[X]" si vous avez effectué une amélioration
 - [X] Termios pour ne pas à avoir à appuyer sur entrer pour jouer.
 - [x] Pouvoir choisir la taille de la map ( matrice )
 - [x] Explication des règles au préalable.
-- Interface graphique via Mingl.
+- [x] Interface graphique via Mingl.
 - Rajouter des sons avec Mingl.
 - [X] Mode de jeu ChasseurVSChassé : alterner les tours tous les x tours selon le nombre de coups total possible.
 - Render Distance pour le mode IA
