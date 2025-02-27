@@ -51,3 +51,12 @@ Aix.plot(x = "Session", y ="%Admission", marker = '*', color = 'red' , ax = trac
 plt.legend([ville_min["Etablissement"].iloc[0],"Info Aix"])
 plt.title("Evolution du taux d'admission")
 plt.show()
+
+#4
+
+groupe = parcoursup.groupby("Code UAI").mean(numaic_only = True)
+
+#a
+
+groupe["%Néo bacheliers"].plot.box(whis=[5,95],vert = False, figsize=(9,7))
+plt.show()
