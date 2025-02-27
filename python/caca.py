@@ -41,3 +41,13 @@ print("En 2021, le % d'admission maximal était de ", M, "atteint à", ville_max
 m = min(parcoursup2021["%Admission"])
 ville_min = parcoursup2021.loc[parcoursup2021["%Admission"]==m][["Etablissement","code UAI"]]
 print("En 2021, le % d'admission maximal était de", m,"atteint à", ville_min["Etablissement"].values[0])
+
+#b 
+
+c_min = ville_min["Code UAI"].loc[0]
+parcoursup_min = parcoursup.loc[parcoursup["Code UAI"]==c_min]
+trace = parcoursup_min.plot(x = "Session", y = "%Admission", marker='*')
+Aix.plot(x = "Session", y ="%Admission", marker = '*', color = 'red' , ax = trace)
+plt.legend([ville_min["Etablissement"].iloc[0],"Info Aix"])
+plt.title("Evolution du taux d'admission")
+plt.show()
